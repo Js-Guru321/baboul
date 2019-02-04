@@ -1,0 +1,201 @@
+<nb-card class='search'>
+
+  <!--<nb-card-header>
+    <div class='row'>
+      <div class='col-8'>
+
+
+    <form id="search-form">
+        <div class="search">
+          <input type="text" [(ngModel)]="search" name="search" class="round" placeholder="Inserisci il nome di un Brand, di un Prodotto o di un Negozio" (focus)='show=true' (focusout)='focusOut()'/>
+          <input type="submit" class="corner" value="" />
+          &lt;!&ndash; <label class='cornerLabel'>
+            Bologna
+          </label> &ndash;&gt;
+
+
+        </div>
+      </form>
+        </div>
+      <div class='col-2'>
+        &lt;!&ndash; <ngx-select-dropdown [multiple]="false" [(value)]="filterGender" [options]="options" [config]="configDropdown" (change)="changeGender($event)"></ngx-select-dropdown> &ndash;&gt;
+        <button nbButton class='infoButton' size='xsmall'  nbPopover="Presto in tutte le città!" nbPopoverMode="hover" nbPopoverPlacement="bottom"><i>Bologna</i> <i class='nb-info
+'></i></button>
+      </div>
+      <div class='col-1'>
+        &lt;!&ndash; <ngx-select-dropdown [multiple]="false" [(value)]="filterGender" [options]="options" [config]="configDropdown" (change)="changeGender($event)"></ngx-select-dropdown> &ndash;&gt;
+        <button nbButton size='xsmall' (click)="changeGender()">{{filterGender}} <i class='nb-loop'></i></button>
+      </div>
+    </div>
+
+
+  </nb-card-header>-->
+
+  <nb-card-header>
+    <form class="form-inline">
+      <div class="input-group input-group-rounded full-width">
+        <input autocomplete="off" type="text" [(ngModel)]="search" name="search" placeholder="{{placeholder}}" (focus)='inputFocus()' (blur)="inputBlur()" class="form-control search-input"/>
+      </div>
+      <button style='cursor: default!important' type="submit" class="search-button"></button>
+    <!--
+      <button class="btn btn-primary btn-round" nbPopover="Presto in tutte le città!" nbPopoverMode="hover" nbPopoverPlacement="bottom">
+        <span class="text">Bologna</span>
+        <i class='nb-info'></i>
+      </button>
+    -->
+      <button class="btn btn-primary btn-round" (click)="changeGender()">
+        <div class="text gender-label">{{filterGender}} <i class="nb-loop nb-loop-style"></i></div>
+      </button>
+    </form>
+  </nb-card-header>
+
+  <!--<nb-card-body *ngIf='search || show' (focus)='show=true'>-->
+    <!--<div class="search-list">-->
+      <!--<a class='menuTitle' [routerLink]="['/list/brand']">-->
+        <!--<h3>-->
+          <!--<span><img src="assets/images/brand.png"/></span>-->
+          <!--<span>Brand</span>-->
+        <!--</h3>-->
+      <!--</a>-->
+      <!--<nb-list *ngIf='search != ""'>-->
+        <!--<nb-list-item-->
+            <!--*ngFor="let item of listBrand |shuffle|filterBy: search : 'nome' : true : 'brand'  |filterBy: filterGender[0].name :'sesso' :true :'brand'  | limitTo: 5 : 0  "-->
+            <!--(click)="navigate(item.brand.id, 'brand')">-->
+          <!--{{ item.brand.nome }}-->
+        <!--</nb-list-item>-->
+        <!--<nb-list-item *ngIf="(listBrand | filterBy: search : 'nome' : true : 'brand' ).length === 0">-->
+          <!--No results-->
+        <!--</nb-list-item>-->
+      <!--</nb-list>-->
+    <!--</div>-->
+    <!--<div *ngFor="let item of listCategories.sottoCategorie">-->
+      <!--<a class='menuTitle' [routerLink]="['/list/categorie']">-->
+        <!--<h3>-->
+          <!--<span><img src="assets/images/{{item.categoria.nome.toLowerCase()}}.png"/></span>-->
+          <!--<span>{{ item.categoria.nome }}</span>-->
+        <!--</h3>-->
+      <!--</a>-->
+      <!--<nb-list *ngIf='search != ""'>-->
+        <!--<nb-list-item (click)="navigate(something.categoria.id, 'categorie')"-->
+                      <!--*ngFor="let something of item.sottoCategorie |filterBy: search : 'nome' : true : 'categoria'| limitTo: 5 : 0 ">-->
+          <!--{{ something.categoria.nome }}-->
+
+        <!--</nb-list-item>-->
+        <!--<nb-list-item *ngIf="(item.sottoCategorie | filterBy: search : 'nome' : true : 'categoria').length === 0">-->
+          <!--No results-->
+        <!--</nb-list-item>-->
+      <!--</nb-list>-->
+    <!--</div>-->
+    <!--<div>-->
+      <!--<a class='menuTitle' [routerLink]="['/list/negozi']">-->
+        <!--<h3>-->
+          <!--<span><img src="assets/images/home.png"/></span>-->
+          <!--<span>Negozi</span>-->
+        <!--</h3>-->
+      <!--</a>-->
+      <!--<nb-list *ngIf='search != ""'>-->
+        <!--<nb-list-item [routerLink]="['/negozio', item.id]"-->
+                      <!--*ngFor="let item of listNegozi |filterBy: search : 'nome' | limitTo: 5 : 0 ">-->
+          <!--{{ item.nome }}-->
+        <!--</nb-list-item>-->
+        <!--<nb-list-item *ngIf="(listNegozi | filterBy: search : 'nome').length === 0">-->
+          <!--No results-->
+        <!--</nb-list-item>-->
+      <!--</nb-list>-->
+    <!--</div>-->
+  <!--</nb-card-body>-->
+
+  <nb-card-body *ngIf='search || show' (focus)='show=true'>
+    <!--<nb-list>-->
+      <!--&lt;!&ndash; BRAND &ndash;&gt;-->
+      <!--<nb-list-item class='list-item-title' [routerLink]="['/list/brand']">-->
+        <!--Brand-->
+      <!--</nb-list-item>-->
+      <!--<nb-list-item *ngFor="let item of listBrand |shuffle|filterBy: search : 'nome' : true : 'brand'  |filterBy: filterGender[0].name :'sesso' :true :'brand'  | limitTo: 5 : 0  "-->
+                    <!--(click)="navigate(item.brand.id, 'brand')">-->
+        <!--{{item.brand.nome}}-->
+      <!--</nb-list-item>-->
+      <!--<nb-list-item *ngIf="(listBrand | filterBy: search : 'nome' : true : 'brand' ).length === 0">-->
+        <!--No results-->
+      <!--</nb-list-item>-->
+      <!--&lt;!&ndash; BRAND END &ndash;&gt;-->
+
+      <!--&lt;!&ndash; NEGOZI &ndash;&gt;-->
+      <!--<nb-list-item class='list-item-title' [routerLink]="['/list/negozi']">-->
+        <!--Negozi-->
+      <!--</nb-list-item>-->
+      <!--<nb-list-item [routerLink]="['/negozio', item.id]" *ngFor="let item of listNegozi |filterBy: search : 'nome' | limitTo: 5 : 0 ">-->
+        <!--{{ item.nome }}-->
+      <!--</nb-list-item>-->
+      <!--<nb-list-item *ngIf="(listNegozi | filterBy: search : 'nome').length === 0">-->
+        <!--No results-->
+      <!--</nb-list-item>-->
+      <!--&lt;!&ndash; NEGOZI END &ndash;&gt;-->
+
+    <!--</nb-list>-->
+
+    <div class="search-list" >
+      <a class='menuTitle' [routerLink]="['/list/brand']" *ngIf='search == "" || !emptyBrands()'>
+        <h3>
+          <span><img src="assets/images/brand.png"/></span>
+          <span>Brand</span>
+        </h3>
+      </a>
+      <nb-list *ngIf='search != "" && !emptyBrands()'>
+        <nb-list-item
+            *ngFor="let item of listBrand |shuffle| baboulArrayFilterPipe: search : 'nome' : true : 'brand'  |baboulArrayFilterPipe: filterGender :'sesso' :true :'brand'  | limitTo: 5 : 0  "
+            (click)="navigateRoute(item.brand.nome, item.brand.id)">
+          {{ item.brand.nome }}
+        </nb-list-item>
+        <!--<nb-list-item *ngIf="(listBrand | filterBy: search : 'nome' : true : 'brand' ).length === 0">-->
+          <!--No results-->
+        <!--</nb-list-item>-->
+      </nb-list>
+    </div>
+
+    <div *ngFor="let item of listCategories.sottoCategorie" class="search-list">
+      <a class='menuTitle' [routerLink]="['/list/categorie']" *ngIf="search == '' || (item.sottoCategorie | baboulArrayFilterPipe: search : 'nome' : true : 'categoria').length !== 0">
+        <h3>
+          <span><img src="assets/images/{{item.categoria.nome.toLowerCase()}}.png"/></span>
+          <span>{{ item.categoria.nome }}</span>
+        </h3>
+      </a>
+      <nb-list *ngIf='search != "" && (item.sottoCategorie | baboulArrayFilterPipe: search : "nome" : true : "categoria").length !== 0'>
+        <nb-list-item
+                      *ngFor="let something of item.sottoCategorie |baboulArrayFilterPipe: search : 'nome' : true : 'categoria'| limitTo: 5 : 0 " (click)="navigateRoute(something.categoria.nome, something.categoria.id)">
+          {{ something.categoria.nome }}
+
+        </nb-list-item>
+        <!--<nb-list-item *ngIf="(item.sottoCategorie | filterBy: search : 'nome' : true : 'categoria').length === 0">-->
+          <!--No results-->
+        <!--</nb-list-item>-->
+      </nb-list>
+    </div>
+
+    <div class="search-list">
+      <a class='menuTitle' [routerLink]="['/list/negozi']" *ngIf="search == '' || (listNegozi | filterBy: search : 'nome').length !== 0">
+        <h3>
+          <span><img src="assets/images/home.png"/></span>
+          <span>Negozi</span>
+        </h3>
+      </a>
+      <nb-list *ngIf='search != "" && (listNegozi | filterBy: search : "nome").length !== 0'>
+        <nb-list-item [routerLink]="['/negozio', friendlyUrl(item.nome)+'-'+item.id]"
+                      *ngFor="let item of listNegozi |filterBy: search : 'nome' | limitTo: 5 : 0 ">
+          {{ item.nome }}
+        </nb-list-item>
+        <!--<nb-list-item *ngIf="(listNegozi | filterBy: search : 'nome').length === 0">-->
+          <!--No results-->
+        <!--</nb-list-item>-->
+      </nb-list>
+    </div>
+
+    <div class="search-list">
+        <nb-list *ngIf="search != '' &&  emptyBrands() && emptySubcategories() && (listNegozi | filterBy: search : 'nome').length === 0">
+          <nb-list-item>
+            <strong>Nessun risultato disponibile.</strong> Prova a modificare la tua ricerca cambiando la parola!
+          </nb-list-item>
+        </nb-list>
+    </div>
+  </nb-card-body>
+</nb-card>

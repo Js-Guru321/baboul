@@ -1,0 +1,31 @@
+@import '../../theme.scss'
+
+@include nb-install-component()
+  .followButton
+    padding: 5px 5px 5px 15px
+    font-weight: bold
+    text-transform: none
+    border: 1px solid black
+    color: black
+    background: white
+    font-size: 1rem
+    line-height: 1.9rem
+    &:hover, &:focus, &:active
+      color: black
+      border-color: black
+      cursor: pointer
+    &.followButtonGreen
+      border-color: #3C9E95
+      color: #3C9E95
+      &:hover, &:focus, &:active
+        color: #3C9E95
+        border-color: #3C9E95
+        cursor: pointer
+    img
+      width: 1.5rem
+      margin-left: 4px
+      vertical-align: text-bottom
+
+  img.followImg
+    width: 2rem
+    cursor: pointer

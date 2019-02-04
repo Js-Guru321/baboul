@@ -1,0 +1,66 @@
+@import '../../theme.scss'
+
+@include nb-install-component()
+  div.follow-button,
+  button.follow-button
+    cursor: pointer
+    display: inline-flex
+    flex-direction: row
+    justify-content: space-between
+    &.follow-button-followed
+      border-color: rgb(60, 158, 149)
+      color: rgb(60, 158, 149)
+
+  button.follow-button
+    background-color: rgb(250, 252, 252)
+    border-color: rgb(26, 19, 13)
+    padding: 10px 14px
+    justify-content: space-between
+    .button-text
+      text-transform: none
+      font-size: 14px
+      font-weight: 900
+      letter-spacing: 2.3px
+      color: rgb(26, 19, 13)
+      padding-right: 6px
+    .button-icon,
+    .button-text
+      align-self: center
+
+  button.follow-button,
+  div.follow-button
+    .button-icon
+      height: 44px
+      width: 44px
+      background: url('/assets/images/follow.png') no-repeat
+      background-size: contain
+    &.follow-button-followed
+      .button-text
+        color: rgb(60, 158, 149)
+      .button-icon
+        background-image: url('/assets/images/followGreen.png')
+  div.follow-button
+    &.small
+      .button-icon
+        height: 22px
+        width: 22px
+//ANIMAZIONE
+.scale-up-center-animation
+  -webkit-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both
+  -o-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both
+  animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both
+
++keyframes(scale-up-center)
+  0%
+    -webkit-transform: scale(1)
+    -moz-transform: scale(1)
+    -ms-transform: scale(1)
+    -o-transform: scale(1)
+    transform: scale(1)
+
+  100%
+    -webkit-transform: scale(1.5)
+    -moz-transform: scale(1.5)
+    -ms-transform: scale(1.5)
+    -o-transform: scale(1.5)
+    transform: scale(1.5)

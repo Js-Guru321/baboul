@@ -1,0 +1,216 @@
+@import ../../theme.scss
+
+.registrazioneContainer
+  display: flex
+  flex-direction: row
+  flex: 1
+.gradient
+  //background-color: rgba(19,104,141,1) /* Old browsers */
+  background-image: linear-gradient(to left bottom, #27a38d, #009694, #008797, #007895, #13698d);
+  flex: 0.5
+
+::ng-deep app-registrazione-modal
+  .modal-dialog
+    margin: 0 auto
+    max-width: 100%
+  .modal-footer
+    box-shadow: unset !important
+  .modal-header
+    display: none
+
+.desktopDescriptionContainer
+  display: flex
+  padding: 50px 100px 50px 100px
+  width: 50vw
+  height: 50vw
+  flex-direction: column
+  align-items: center
+  justify-content: space-between
+
+  .descriptionHeaderContainer
+    display: flex
+    text-align: center
+    justify-content: space-between
+    flex-direction: column
+  .firstLineSpacing
+    letter-spacing: 2px
+  .secondLineSpacing
+    letter-spacing: 3px
+  .descriptionFontBold
+    color: white
+    font-family: 'Avenir-Black', serif
+    font-size: 18.89px
+  .descriptionFontItalic
+    font-family: 'Avenir', serif
+    font-style: italic
+  .desktopDescriptionDivider
+    height: 1px
+    width: 100%
+    background-color: white
+    margin-top: 20px
+    margin-bottom: 20px
+  ul
+    margin-top: 10px
+  li
+    margin-top: 35px
+  li:first-child
+    margin-top: 0
+  .descriptionHeaderFont
+    font-family: 'Avenir', serif
+    font-size: 18.89px
+    color: white
+  .descriptionBodyTitle
+    font-family: 'Avenir-Black', serif
+    font-size: 26.85px
+    color: white
+  .descriptionBodyList
+    color: white
+    font-family: 'Avenir', serif
+    font-size: 21.71px
+    text-align: center
+
+.app-xl
+  app-registrazione:host
+    .desktopDescriptionContainer
+      .descriptionFontBold
+        font-size: 16.89px
+      .descriptionHeaderFont
+        font-size: 16.89px
+      .descriptionBodyTitle
+        font-size: 24.85px
+      .descriptionBodyList
+        font-size: 19.71px
+.app-lg
+  app-registrazione:host
+    .desktopDescriptionContainer
+      padding: 20px 50px 20px 50px
+      .descriptionFontBold
+        font-size: 14.89px
+      .descriptionHeaderFont
+        font-size: 14.89px
+      .descriptionBodyTitle
+        font-size: 22.85px
+      .descriptionBodyList
+        font-size: 17.71px
+
+.app-mobile
+  .desktopDescriptionContainer
+    padding: 20px 50px 20px 50px
+  &.app-md
+    app-registrazione:host
+      .desktopDescriptionContainer
+        .descriptionFontBold
+          font-size: 12.89px
+        .descriptionHeaderFont
+          font-size: 12.89px
+        .descriptionBodyTitle
+          font-size: 20.85px
+        .descriptionBodyList
+          font-size: 15.71px
+  &.app-sm
+    app-registrazione:host
+      .desktopDescriptionContainer
+        .descriptionHeaderFont
+          font-size: 10.89px
+        .descriptionBodyTitle
+          font-size: 18.85px
+        .descriptionBodyList
+          font-size: 13.71px
+  &.app-xs, &.app-is
+    app-registrazione:host
+      .desktopDescriptionContainer
+        .descriptionHeaderFont
+          font-size: 10.89px
+        .descriptionBodyTitle
+          font-size: 18.85px
+        .descriptionBodyList
+          font-size: 13.71px
+.registrazioneLogo
+  width: 25%
+  height: auto
+  min-height: 100px
+  min-width: 100px
+  max-width: 160px
+.registrazioneForm
+  flex: 0.5
+  justify-content: center
+  display: flex
+  flex-direction: column
+.registrazioneSpan, .registrazioneButton
+  display: block
+  margin: auto
+
+.logo
+  display: block
+  width: 220px
+  margin: 20px auto 30px
+
+.registrazioneSpan
+  font-size: 20px
+  //margin-bottom: 20px
+  text-align: center
+  line-height: 26px
+  color: #898587
+  margin: 0
+
+.modal-body .radioCol
+  padding: 30px 18px 0
+
+.registrazioneRadio
+  display: inline
+  padding: 2px 1.5rem
+
+.registrazioneInput
+  border: 0px
+  border-bottom: 1px solid grey
+  margin-bottom: 10px
+  margin-top: 15px
+  height: 30px
+  width: 100%
+  margin-right: 10px
+  text-align: left
+  padding: 0 0 0 6px
+
+.formWrapper
+  // width: 80%
+  margin: auto
+
+.radioCol
+  padding: 6px
+.formButtonContainer
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  align-items: center
+  margin-top: 20px
+.registrazioneButton
+  //margin: 60px auto!important
+  background-color: #6EBFAB!important
+  font-weight: 400
+  font-size: 22px!important
+  width: 50%
+  box-shadow: 5px 5px 10px #ccc
+  -webkit-box-shadow: 5px 5px 10px #ccc
+.registrazioneButtonFB
+  //margin: 60px auto!important
+  background-color: #13698d!important
+  font-weight: 400
+  font-size: 22px!important
+  width: 50%
+  margin-top: 10px
+  box-shadow: 5px 5px 10px #ccc
+  -webkit-box-shadow: 5px 5px 10px #ccc
+  text-transform: none
+
+.fade.show
+  background: rgba(0,0,0,.5)!important
+
+//.modal-content
+//  background: transparent
+.response-error-message
+  display: none
+  margin-top: 28px
+
+.is-invalid.invalid-feedback,
+.is-invalid.response-error-message
+  display: flex !important

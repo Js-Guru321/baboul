@@ -1,0 +1,330 @@
+<nb-layout-header subheader fixed>
+  <app-search></app-search>
+  <!-- <a href="#" (click)="toggle()" class="nav-link hamburger-menu" [hidden]='!isMobileScreen'> -->
+    <!-- <i class="nb-menu"></i> -->
+  <!-- </a> -->
+</nb-layout-header>
+<nb-sidebar tag="filterSidebar" fixed [compactedBreakpoints]="[]" class="app-filter-sidebar-mobile">
+  <nb-sidebar-header>
+    <span class='sidebarHeader'>
+    <h3 (click)="toggle()">Filtri</h3>
+    <a href="#" (click)="toggle()" class="nav-link hamburger-menu" [hidden]='!isMobileScreen'>
+      <i class="nb-arrow-left"></i>
+    </a>
+  </span>
+  </nb-sidebar-header>
+  
+  <nb-card class="card-order">
+      <nb-card-header (click)="showTypologyOrder = !showTypologyOrder">
+        <span [class.nb-arrow-down]="!showTypologyOrder" [class.nb-arrow-up]="showTypologyOrder" class="float-right"></span>
+        Ordina
+      </nb-card-header>
+      <nb-card-body *ngIf="showTypologyOrder">
+          <div class="form-check">
+              <label class="custom-control custom-radio">
+                <input type="radio" [(ngModel)]="sorting" [value]="1" name="sortingMobile" (change)="setSort('rilevanza')" class="ng-touch">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Rilevanza</span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="custom-control custom-radio">
+                <input type="radio" name="sortingMobile" [(ngModel)]="sorting" [value]="2" (change)="setSort('distanza')">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Distanza</span>
+              </label>
+            </div>
+      </nb-card-body>
+    </nb-card>
+  <nb-card *ngIf="snap!='categorie'" class="card-category">
+    <nb-card-header (click)="showCategoryFilter = !showCategoryFilter">
+      <span [class.nb-arrow-down]="!showCategoryFilter" [class.nb-arrow-up]="showCategoryFilter" class="float-right"></span>
+      Categorie
+    </nb-card-header>
+    <nb-card-header *ngIf='!searchedCategory && showCategoryFilter'>
+      <pagination-controls maxSize='5' class="text-center" *ngIf='searchStringSecond' (pageChange)="p2= $event" id="second"></pagination-controls>
+      <div class="input-group input-group-rounded full-width">
+        <input type="text" [(ngModel)]="searchStringSecond" name="searchSecond" (ngModelChange)="p2=1" class="form-control"/>
+      </div>
+    </nb-card-header>
+    <nb-list *ngIf='searchStringSecond'>
+      <nb-list-item class="list-item-result d-flex align-items-center" *ngFor='let item of categorieList | baboulArraySortBy: false : "nome" | baboulArrayFilterLetter: searchStringSecond: "nome" | baboulArrayFilterLetter: filterGender: "sesso" |  paginate: { itemsPerPage: 10, currentPage: p2, id: "second" }'>
+        <span class='mr-auto title' (click)='search(item.nome, item.id, "categoria")'>
+          {{item.nome}}
+        </span>
+        <button nbButton size='xsmall' outline status="{{ item.sesso === 'UOMO' ? 'sucess' : 'danger' }}" shape='semi-round'>{{ item.sesso | uppercase }}</button>
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+  <nb-card class="card-typology" >
+    <nb-card-header (click)="showTypologyFilter = !showTypologyFilter">
+      <span [class.nb-arrow-down]="!showTypologyFilter" [class.nb-arrow-up]="showTypologyFilter" class="float-right"></span>
+     Tipologia
+    </nb-card-header>
+        <nb-card-body *ngIf="showTypologyFilter">
+            <div class="input-group input-group-rounded full-width">
+              <select [(ngModel)]="selectedType">
+                <option [ngValue]="undefined">Tutte</option>
+                <option *ngFor="let typo of typologies" [ngValue]="typo.key">
+                  {{ typo.label }}
+                </option>
+              </select>
+            </div>
+          </nb-card-body>
+    <!--<nb-list *ngIf='searchString'>
+      <nb-list-item class="list-item-result d-flex align-items-center" *ngFor='let item of brandList |sortBy: false :"nome" :true :"brand" |filterBy: searchString: "nome" :true :"brand"  |filterBy: filterGender :"sesso" :true :"brand"  | paginate: { itemsPerPage: 5, currentPage: p1, id: "first" }'>
+        <span class='mr-auto title' (click)='search(item.brand.nome, "brand")'>
+          {{item.brand.nome}}
+        </span>
+        <button nbButton size='xsmall' outline status="{{ item.brand.sesso === 'UOMO' ? 'sucess' : 'danger' }}" shape='semi-round'>{{ item.brand.sesso | uppercase }}</button>
+      </nb-list-item>
+    </nb-list>-->
+  </nb-card>
+
+  <nb-card *ngIf="snap!='brand'" class="card-brand">
+    <nb-card-header (click)="showBrandFilter = !showBrandFilter">
+      <span [class.nb-arrow-down]="!showBrandFilter" [class.nb-arrow-up]="showBrandFilter" class="float-right"></span>
+      Brand
+    </nb-card-header>
+    <nb-card-header *ngIf='!searchedBrand && showBrandFilter'>
+      <pagination-controls maxSize='5' class="text-center" *ngIf='searchString' (pageChange)="p1= $event" id="first"></pagination-controls>
+      <div class="input-group input-group-rounded full-width">
+        <input type="text" [(ngModel)]="searchString" name="searchString" (ngModelChange)="p1=1" class="form-control"/>
+      </div>
+    </nb-card-header>
+    <nb-list *ngIf='searchString && showBrandFilter'>
+      <nb-list-item class="list-item-result d-flex align-items-center" *ngFor='let item of brandList |baboulArraySortBy: false :"nome" :true :"brand" |baboulArrayFilterPipe: searchString: "nome" :true :"brand"  |baboulArrayFilterPipe: filterGender :"sesso" :true :"brand"  | paginate: { itemsPerPage: 5, currentPage: p1, id: "first" }'>
+        <span class='mr-auto title' (click)='search(item.brand.nome, item.brand.id, "brand")'>
+          {{item.brand.nome}}
+        </span>
+        <button nbButton size='xsmall' outline status="{{ item.brand.sesso === 'UOMO' ? 'sucess' : 'danger' }}" shape='semi-round'>{{ item.brand.sesso | uppercase }}</button>
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+</nb-sidebar>
+
+    <div class='row layoutWrapper'>
+      <div class='row mobile-filters-row' *ngIf='isMobileScreen'>
+        <div class='col-12'>
+         
+           <span (click)="toggle()" class='mobile-filters'>Filtra</span> 
+        </div>
+      </div>
+      <div class='col-12 mobile-padding-zero' *ngIf='isMobileScreen'>
+        <nb-card *ngIf="positions && positions.length > 0" class="card-map" style='height: 200px'>
+          <ngui-map [options]="mapOptions" (mapReady$)="mapReady($event)">
+            <ng-container *ngFor="let position of positions | baboulArrayFilterPipe: selectedType: 'tipo': true: 'store'" >
+              <marker [position]="position.position" (click)="positionClicked($event, position)"></marker>
+            </ng-container>
+            <info-window id="markerInfoWindow">
+              <div class="store-mark-info" *ngIf="selectedPosition">
+                <p>
+                  <a class="h5" [routerLink]="['/negozio', friendlyUrl(selectedPosition.store.nome)+'-'+selectedPosition.store.id]">{{selectedPosition.store.nome}}</a>
+                  <!--<app-followButton style='float: right' [small]='true' [negozioID]='negozio.id'></app-followButton>-->
+                </p>
+                <p class="mb-3"><i>{{selectedPosition.store.indirizzo}}</i></p>
+                <p class='text-hint mb-0' *ngIf='selectedPosition.store.negozioType'>{{selectedPosition.store.negozioType.nome}}</p>
+                <p class='text-hint mb-0'>{{selectedPosition.store.tipo}}</p>
+                <p class="mb-0">
+                  <span *ngIf='selectedPosition.store.uomo'>Uomo </span> <span *ngIf='selectedPosition.store.donna'>Donna</span>
+                </p>
+                <p class="mb-0"><b>{{ selectedPosition.store | storeOpened: true }}</b></p>
+              </div>
+            </info-window>
+          </ngui-map>
+        </nb-card>
+      </div>
+
+      <div class='col-lg-8 col-xs-12' [class.mobile-padding-zero]="isMobileScreen">
+        <nb-card class="store-list-card">
+          <nb-card-body *ngIf='!(results && results.length > 0)'>
+            <p class="m-3">Nessun risultato</p>
+          </nb-card-body>
+            <!-- <div class='row negozioContainer' *ngFor='let negozio of results'>
+              <div class='col-5'>
+                  <img src='/shopadvisor/immagini/negozi/{{negozio.immagini[0].nomeFile}}' style='width: 100%'>
+              </div>
+              <div class='col-7'>
+                  <a [routerLink]="['/negozio', negozio.id]"><h1>{{negozio.nome}}</h1></a>
+                <p>
+                  <span><i>{{negozio.indirizzo}}</i></span>
+                </p>
+                <span class='info' *ngIf='negozio.negozioType'>{{negozio.negozioType.nome}}</span><br />
+                <span class='info'>{{negozio.tipo}}</span>
+                <p>
+                  <span *ngIf='negozio.uomo'>Uomo </span> <span *ngIf='negozio.donna'>Donna</span>
+                </p>
+                <p>
+                  <span>{{negozio.descrizione}}</span>
+                </p>
+                <p>
+                  <b>{{negozio.distanza}} m</b>
+                </p>
+              </div>
+            </div> -->
+          <nb-list *ngIf='finished && results && results.length > 0' nbInfiniteList [threshold]="1000" listenWindowScroll=true (bottomThreshold)="loadNext()" class="store-list">
+            <nb-list-item class='store-list-item' *ngFor="let negozio of results | baboulArrayFilterLetter: selectedType: 'tipo' " [routerLink]="['/negozio', friendlyUrl(negozio.nome)+'-'+negozio.id]">
+              <div class='row m-0'>
+                <div class='store-image-wrapper' *ngIf='negozio.immagini.length'>
+                  <div class="store-image">
+                    <div class="img" [lazyLoad]='negozio | storePictureOrDefault' [offset]="40"></div>
+                    <!--<img [lazyLoad]='negozio | storePictureOrDefault' [offset]="40" style='width: 100%'>-->
+                  </div>
+                </div>
+                <div class='store-information'>
+                  <p class='store-title'>
+                    <app-followButton class="float-right" [small]='true' [negozioID]='negozio.id'></app-followButton>
+                    <a [routerLink]="['/negozio', friendlyUrl(negozio.nome) + '-' + negozio.id]">
+                      {{negozio.nome}}
+                    </a>
+                  </p>
+                  <p class="store-address">
+                    {{negozio.indirizzo}}
+                  </p>
+                  <div class="store-sub-information">
+                    <div class="store-type-gender">
+                      <p class="store-type">
+                        <span class="d-block" *ngIf="negozio.negozioType">{{negozio.negozioType.nome}}</span>
+                        <span class="d-block">{{negozio.tipo}}</span>
+                      </p>
+                      <p class="store-gender">
+                        {{ negozio | storeGender: 'Uomo': 'Donna': '' }}
+                      </p>
+                    </div>
+                    <div class="store-opened-closed-distance">
+                      <p class="store-opened-closed">
+                        {{ negozio | storeOpened: true: [undefined, undefined, '']}}
+                      </p>
+                      <p class="store-distance">
+                        {{ negozio.distanza | storeDistance }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nb-list-item>
+          </nb-list>
+        </nb-card>
+      </div>
+      <div class='col-lg-4 col-xs-12'>
+
+        <!-- GOOGLE MAPS -->
+        <nb-card *ngIf="!isMobileScreen && positions && positions.length > 0" class="card-map">
+          <ngui-map [options]="mapOptions" (mapReady$)="mapReady($event)">
+            <ng-container *ngFor="let position of positions | baboulArrayFilterPipe: selectedType: 'tipo': true: 'store'" >
+              <marker [position]="position.position" (click)="positionClicked($event, position)"></marker>
+            </ng-container>
+            <info-window id="markerInfoWindow">
+              <div class="store-mark-info" *ngIf="selectedPosition">
+                <p>
+                  <a class="h5" [routerLink]="['/negozio', friendlyUrl(selectedPosition.store.nome)]">{{selectedPosition.store.nome}}</a>
+                  <!--<app-followButton style='float: right' [small]='true' [negozioID]='negozio.id'></app-followButton>-->
+                </p>
+                <p class="mb-3"><i>{{selectedPosition.store.indirizzo}}</i></p>
+                <p class='text-hint mb-0' *ngIf='selectedPosition.store.negozioType'>{{selectedPosition.store.negozioType.nome}}</p>
+                <p class='text-hint mb-0'>{{selectedPosition.store.tipo}}</p>
+                <p class="mb-0">
+                  <span *ngIf='selectedPosition.store.uomo'>Uomo </span> <span *ngIf='selectedPosition.store.donna'>Donna</span>
+                </p>
+                <p class="mb-0"><b>{{ selectedPosition.store | storeOpened: true }}</b></p>
+              </div>
+            </info-window>
+          </ngui-map>
+        </nb-card>
+        <!-- GOOGLE MAPS END -->
+        <nb-card class="card-order" [hidden]="isMobileScreen">
+          <nb-card-header class="filter-title-header">
+            Filtra
+          </nb-card-header>
+        </nb-card>
+        <nb-card class="card-order" [hidden]='isMobileScreen'>
+            <nb-card-header (click)="showTypologyOrder = !showTypologyOrder">
+              <span [class.nb-arrow-down]="!showTypologyOrder" [class.nb-arrow-up]="showTypologyOrder" class="float-right"></span>
+              Ordina
+            </nb-card-header>
+            <nb-card-body *ngIf="showTypologyOrder">
+                <div class="form-check">
+                    <label class="custom-control custom-radio">
+                      <input type="radio" [(ngModel)]="sorting" [value]="1" name="sorting"  (ngModelChange)="setSort('rilevanza')">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Rilevanza</span>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="custom-control custom-radio">
+                      <input type="radio" name="sorting" [(ngModel)]="sorting" [value]="2" (ngModelChange)="setSort('distanza')">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Distanza</span>
+                    </label>
+                  </div>
+            </nb-card-body>
+          </nb-card>
+        <nb-card *ngIf="snap!='categorie'" class="card-category" [hidden]="isMobileScreen">
+          <nb-card-header (click)="showCategoryFilter = !showCategoryFilter">
+            <span [class.nb-arrow-down]="!showCategoryFilter" [class.nb-arrow-up]="showCategoryFilter" class="float-right"></span>
+            Categorie
+          </nb-card-header>
+          <nb-card-body [class.h-0]="!showCategoryFilter">
+            <pagination-controls maxSize='5' class="text-center" *ngIf='searchStringSecond' (pageChange)="p2= $event" id="second"></pagination-controls>
+            <div class="input-group input-group-rounded full-width" *ngIf='!searchedCategory'>
+              <input type="text" [(ngModel)]="searchStringSecond" name="searchSecond" (ngModelChange)="p2=1" class="form-control"/>
+            </div>
+            <nb-list *ngIf='searchStringSecond'>
+              <nb-list-item class="list-item-result d-flex align-items-center" *ngFor='let item of categorieList | baboulArraySortBy: false : "nome" | baboulArrayFilterLetter: searchStringSecond: "nome" | baboulArrayFilterLetter: filterGender: "sesso" |  paginate: { itemsPerPage: 10, currentPage: p2, id: "second" }'>
+                <span class='mr-auto title' (click)='search(item.nome, item.id, "categoria")'>
+                  {{item.nome}}
+                </span>
+                <button nbButton size='xsmall' outline status="{{ item.sesso === 'UOMO' ? 'sucess' : 'danger' }}" shape='semi-round'>{{ item.sesso | lowercase }}</button>
+              </nb-list-item>
+            </nb-list>
+          </nb-card-body>
+          <nb-list *ngIf='searchStringSecond && showCategoryFilter'>
+            <nb-list-item class="list-item-result d-flex align-items-center" *ngFor='let item of categorieList | baboulArraySortBy: false : "nome" | baboulArrayFilterLetter: searchStringSecond: "nome" | baboulArrayFilterLetter: filterGender: "sesso" |  paginate: { itemsPerPage: 10, currentPage: p2, id: "second" }'>
+              <span class='mr-auto title' (click)='search(item.nome, item.id, "categoria")'>
+                {{item.nome}}
+              </span>
+              <button nbButton size='xsmall' outline status="{{ item.sesso === 'UOMO' ? 'sucess' : 'danger' }}" shape='semi-round'>{{ item.sesso | uppercase }}</button>
+            </nb-list-item>
+          </nb-list>
+       </nb-card>
+
+        <nb-card class="card-typology" [hidden]='isMobileScreen'>
+          <nb-card-header (click)="showTypologyFilter = !showTypologyFilter">
+            <span [class.nb-arrow-down]="!showTypologyFilter" [class.nb-arrow-up]="showTypologyFilter" class="float-right"></span>
+            Tipologia
+          </nb-card-header>
+          <nb-card-body [class.h-0]="!showTypologyFilter">
+            <div class="input-group input-group-rounded full-width">
+              <select [(ngModel)]="selectedType">
+                <option [ngValue]="undefined">Tutte</option>
+                <option *ngFor="let typo of typologies" [ngValue]="typo.key">
+                  {{ typo.label }}
+                </option>
+              </select>
+            </div>
+          </nb-card-body>
+        </nb-card>
+        
+
+        <nb-card *ngIf="snap!='brand'" class="card-brand" [hidden]="isMobileScreen">
+          <nb-card-header (click)="showBrandFilter = !showBrandFilter">
+            <span [class.nb-arrow-down]="!showBrandFilter" [class.nb-arrow-up]="showBrandFilter" class="float-right"></span>
+            Brand
+          </nb-card-header>
+          <nb-card-body [class.h-0]="!showBrandFilter">
+            <pagination-controls maxSize='5' class="text-center" *ngIf='!searchedBrand && searchString' (pageChange)="p1 = $event" id="first"></pagination-controls>
+            <div class="input-group input-group-rounded full-width" *ngIf="!searchedBrand">
+              <input type="text" [(ngModel)]="searchString" name="searchString" (ngModelChange)="p1 = 1" class="form-control"/>
+            </div>
+            <nb-list *ngIf='searchString'>
+              <nb-list-item class="list-item-result d-flex align-items-center" *ngFor='let item of brandList |baboulArraySortBy: false :"nome" :true :"brand" |baboulArrayFilterPipe: searchString: "nome" :true :"brand"  |baboulArrayFilterPipe: filterGender :"sesso" :true :"brand"  | paginate: { itemsPerPage: 5, currentPage: p1, id: "first" }'>
+                <span class='mr-auto title' (click)='search(item.brand.nome, item.brand.id, "brand")'>
+                  {{item.brand.nome}}
+                </span>
+                <button nbButton size='xsmall' outline status="{{ item.brand.sesso === 'UOMO' ? 'sucess' : 'danger' }}" shape='semi-round'>{{ item.brand.sesso | uppercase }}</button>
+              </nb-list-item>
+            </nb-list>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>

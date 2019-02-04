@@ -1,0 +1,15 @@
+<nb-card>
+  <nb-card-header>
+
+  </nb-card-header>
+  <nb-list>
+    <nb-list-item *ngFor="let prop of properties | objToArray">
+      {{ prop }} {{ properties[prop] }}
+    </nb-list-item>
+  </nb-list>
+  <nb-card-footer>
+    <pre>{{ path | json }}</pre>
+    <pre>{{ possibleCategories | json }}</pre>
+    <pre>{{ possibleBrands | json }}</pre>
+  </nb-card-footer>
+</nb-card>

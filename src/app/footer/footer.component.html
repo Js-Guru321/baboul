@@ -1,0 +1,33 @@
+
+<div class='row'>
+  <div class='col-lg-4 col-xs-12' [class.footerFlexMobile]="isTabletScreen || isMobileScreen">
+    <img src="assets/images/logo_footer.png" [class.footerLogo]="isDesktopScreen" [class.footerLogoMobile]="!isDesktopScreen" />
+    <p class="footerParag">
+      <span [class.footerSpan]='isDesktopScreen' [class.footerSpanMobile]="isMobileScreen || isTabletScreen" >è un prodotto di  GENIUS IDEA SRL<br/>
+        Via G. di Vittorio 21/C - Castel Maggiore (BO)
+      </span>
+      <span [class.footerSpan]='isDesktopScreen' [class.footerSpanMobile]="isMobileScreen || isTabletScreen"><b>info@baboul.it</b></span>
+      <span [class.footerSpan]='isDesktopScreen' [class.footerSpanMobile]="isMobileScreen || isTabletScreen"><i>©2018 - Genius Idea SRL - Tutti i diritti Riservati</i></span>
+    </p>
+  </div>
+  <div class='col-lg-4 col-xs-12' [class.socialCol]="isDesktopScreen">
+    <h3 class='socialLink' *ngIf="isDesktopScreen">SEGUICI!</h3>
+    <div class='socialLinkIcons'>
+      <a target="_blank" href="https://www.instagram.com/baboul_app/?hl=it"><img [class.socialIconMobile]="!isDesktopScreen" [class.socialIcon]="isDesktopScreen" src="assets/images/instagram.png" title="instagram"/></a>
+      <a target="_blank" href="https://www.facebook.com/BABOULapp/"><img [class.socialIconMobile]="!isDesktopScreen" [class.socialIcon]="isDesktopScreen" src="assets/images/facebook.png" title="facebook"/></a>
+    </div>
+  </div>
+  <div class='col-lg-4 col-xs-12 lastCol'>
+    <a [hidden]='isMobileScreen || isTabletScreen' href="https://itunes.apple.com/it/app/baboul/id1166949662?mt=8" target="_blank">Scarica App per iOS!</a>
+    <a [hidden]='isMobileScreen || isTabletScreen' href="mailto:info@baboul.it?subject=[INFO] Maggiorni informazioni riguardo Baboul">Hai un Negozio a Bologna?</a>
+    <a [hidden]='isMobileScreen || isTabletScreen' >Chi Siamo</a>
+    <a [hidden]='isMobileScreen || isTabletScreen' >Lavora con Noi!</a>
+    <div class='end' [class.mt-4]="isDesktopScreen" [class.mtMobile]="!isDesktopScreen">
+      <i class="d-inline" [class.iMobile]="!isDesktopScreen">
+        <a href="http://www.baboul.it/privacy#tos" target="_blank" class="d-inline">Termini di Utilizzo</a> -
+        <a href="https://www.iubenda.com/privacy-policy/27284517" target="_blank" class="no-brand d-inline" title="Privacy Policy">Privacy</a> -
+        <a href="https://www.iubenda.com/privacy-policy/27284517/cookie-policy" target="_blank" class="no-brand d-inline" title="Cookie Policy">Cookie</a> -
+        <a [routerLink]="['/sitemap']" class="d-inline">Mappa</a></i>
+    </div>
+  </div>
+</div>

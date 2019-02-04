@@ -1,0 +1,42 @@
+<div class="modal-dialog login-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" (click)="close()" >&times;</button>
+    </div>
+    <div class="modal-body">
+      <img class='logo' src="assets/images/logo_grey.png" />
+      <span class='loginSpan'>Effettua il login <br />con i tuoi dati di accesso</span>
+      <div class="row login-row">
+        <div class="col-10 offset-1">
+          <div class="row">
+            <div class="col-12 input-col">
+              <input type="text" autocomplete="email" [(ngModel)]="email" name="email" class="form-control" placeholder="Email" (keyup)="onKeyUp($event)" (ngModelChange)="onValueChanged($event)" required/>
+              <div [class.is-invalid]="emailMissmatch" class="invalid-feedback">Inserisci l'indirizzo email</div>
+            </div>
+            <div class="col-12 input-col">
+              <input  type="password" autocomplete="current-password" [(ngModel)]="password" name="password" class="form-control" placeholder="Password" (keyup)="onKeyUp($event)" (ngModelChange)="onValueChanged($event)" required/>
+              <div [class.is-invalid]="passwordMissmatch" class="invalid-feedback">Inserisci la password</div>
+            </div>
+            <div class="col-12">
+              <div [class.d-flex]="errorResponseMessage" class="response-error-message align-items-center text-danger h6">
+                <span class="">{{ errorResponseMessage }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class='loginButton' nbButton shape="round" size="small" status="success" (click)="toggleLoadingAnimation()"
+        [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="">Login</button>
+    </div>
+    <div class="modal-footer border-top-0 d-block">
+      <p class="ml-auto mr-auto text-center">
+        <span class="d-block">Non sei registrata/o?</span>
+        <a (click)="switchToRegister()" class="d-block register-link">Registrati ora!</a>
+      </p>
+      <p class="ml-auto mr-auto text-center">
+        <a (click)="switchToForgotPassword()" class="d-block forgot-password-link">Hai dimenticato la password?</a>
+      </p>
+    </div>
+  </div>
+</div>

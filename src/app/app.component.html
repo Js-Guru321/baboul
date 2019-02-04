@@ -1,0 +1,95 @@
+<ng-http-loader [filteredHeaders]="skipHeaders" spinner="sk-spinner-pulse" backgroundColor="#3C9E95"></ng-http-loader>
+
+<nb-layout id="mainLayout">
+  <nb-layout-header fixed *ngIf="isMobileScreen" class="app-header app-header-mobile">
+    <a href="#" (click)="toggle()" class="hamburger-menu">
+      <img src="assets/images/menu_icon.png" class="icon-menu"/>
+      <!--<i class="nb-menu"></i>-->
+    </a>
+
+    <a href="#" class="nav-link nav-brand" (click)="goToHome()">
+      <img src="assets/images/logo_grey_mobile.png"/>
+    </a>
+  </nb-layout-header>
+
+  <nb-layout-header fixed *ngIf="!isMobileScreen" class="app-header">
+    <!-- <div class="logo-containter"> -->
+    <!-- </div> -->
+
+    <div (click)="goToHome()" class='navLogo'>
+      <img src="assets/images/logo_grey.png" style='cursor: pointer'/>
+    </div>
+
+    <div class="section left">
+      <nb-actions size="small">
+        <!--<nb-action class='navBarLink' [ngClass]="{'carouselActive': index==0}" (click)='changeCarousel(0)'>STORE LOCATOR</nb-action>-->
+        <!--<nb-action class='navBarLink' [ngClass]="{'carouselActive': index==1}" (click)='changeCarousel(1)'>VETRINA</nb-action>-->
+        <nb-action routerLinkActive="carouselActive" [routerLink]="['/home', 'locator']">STORE LOCATOR</nb-action>
+        <nb-action routerLinkActive="carouselActive" [routerLink]="['/vetrina']">VETRINA</nb-action>
+        <nb-action routerLinkActive="carouselActive" [routerLink]="['/preferiti']" *ngIf='user'>PREFERITI</nb-action>
+        <nb-action tooltip="COMING SOON" placement="bottom" containerClass="blog-soon-tooltip">BLOG</nb-action>
+        <nb-action (click)="this.campaignAction()" >SCONTI</nb-action>
+    </nb-actions>
+    </div>
+
+    <div class='section right'>
+      <nb-actions size="small">
+        <nb-action *ngIf='!user' class="login-action header-action"><button nbButton size='xsmall' (click)='showInitial()'>Accedi</button></nb-action>
+        <nb-action *ngIf='!user' class="signup-action header-action"><button nbButton size='xsmall' (click)='showRegistrazione()'>Registrati</button></nb-action>
+        <nb-action class="download-app-action header-action"><a href="https://itunes.apple.com/it/app/baboul/id1166949662?mt=8" target="_blank">Scarica l'App!</a></nb-action>
+        <nb-action *ngIf='user' class="user-action">
+          <nb-user size='middle' name='' [nbContextMenu]="items"  nbContextMenuTag="user-context" picture='{{ user | userPictureOrDefault }}'></nb-user>
+        </nb-action>
+        <!-- <nb-action class="language-action">Ita</nb-action> -->
+      </nb-actions>
+    </div>
+
+  </nb-layout-header>
+
+  <nb-sidebar tag="mainSidebar" fixed [compactedBreakpoints]="[]" class="app-main-sidebar-mobile">
+    <nb-sidebar-header *ngIf="user">
+      <nb-user name="{{user.nome}} {{user.cognome}}"
+               routerLink="/profile"
+               picture='{{ user | userPictureOrDefault }}'>
+      </nb-user>
+      <!--<nb-menu [items]="sidebarUserMenuItems" nbContextMenuTag="userSidebarMenu"></nb-menu>-->
+      <!--<nb-user *ngIf="!user"-->
+      <!--name="Accedi"-->
+      <!--picture='https://api.adorable.io/avatars/256/baboul.png'>-->
+      <!--</nb-user>-->
+    </nb-sidebar-header>
+    <nb-menu [items]="sidebarMenuItems" tag="mainSidebarMenu"></nb-menu>
+    <!--<nb-sidebar-footer>-->
+      <!--<nb-actions start size="small">-->
+        <!--<nb-action class="text-uppercase text-muted">Lingua</nb-action>-->
+      <!--</nb-actions>-->
+      <!--<nb-actions end size="small">-->
+        <!--<nb-action class="text-uppercase">Ita</nb-action>-->
+        <!--<nb-action class="text-uppercase">Eng</nb-action>-->
+      <!--</nb-actions>-->
+      <!--&lt;!&ndash;<nb-menu [items]="sidebarFooterMenuItems" nbContextMenuTag="mainSidebarMenu"></nb-menu>&ndash;&gt;-->
+    <!--</nb-sidebar-footer>-->
+    <nb-sidebar-footer>
+      <nb-actions size="small" class="float-left">
+        <nb-action class="text-uppercase text-muted">Lingua</nb-action>
+      </nb-actions>
+      <nb-actions size="small" class="float-right">
+        <nb-action (click)="setLanguage('it')" class="text-uppercase">Ita</nb-action>
+        <nb-action (click)="setLanguage('en')" class="text-uppercase">Eng</nb-action>
+      </nb-actions>
+    </nb-sidebar-footer>
+  </nb-sidebar>
+
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+    <app-chat #chat id="chatButton"></app-chat>
+
+  </nb-layout-column>
+
+  <nb-layout-footer>
+    <app-footer></app-footer>
+  </nb-layout-footer>
+
+
+</nb-layout>
+<app-temp-promo-banner id="tempPromoBanner" *ngIf="showTempPromoBanner" (click)="this.campaignAction()"></app-temp-promo-banner>

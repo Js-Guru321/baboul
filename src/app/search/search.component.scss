@@ -1,0 +1,396 @@
+@import '~swiper/dist/css/swiper.min.css';
+@import '../../theme.scss';
+
+.menuTitle {
+  span {
+    font-size: 14px;
+    letter-spacing: 4.67px;
+    font-weight: bold;
+    text-transform: uppercase;
+    img {
+      width: 1.5rem;
+      margin-right: 15px;
+    }
+  }
+}
+
+//.roundCircle {
+//  padding: 2px 9px;
+//  background: white;
+//  border-radius: 100%;
+//  margin-left: 10px;
+//  text-align: center;
+//  text-transform: initial;
+//  border: 2px solid #666;
+//}
+
+//.roundCircle:hover {
+//  color: black;
+//}
+
+:host nb-card.search {
+
+  width: 60%;
+  border-radius: 3rem;
+  margin: auto;
+  max-height: 250px;
+  overflow: auto;
+  box-shadow: none;
+  background: rgba(0, 0, 0, 0);
+  overflow: inherit;
+  @media(max-width: 600px){width: 90%}
+
+  > nb-list,
+  nb-card-body {
+    width: 95%;
+    margin: auto;
+    min-height: 292px;
+    position: relative;
+    z-index: 998;
+    border: 1px solid rgb(133, 133, 133);
+    background-color: rgb(236, 246, 247);
+    top: -1px;
+    padding: 0;
+
+    nb-list-item {
+      border: none;
+    }
+  }
+
+  nb-card-header {
+    padding: .85rem;
+    border-radius: 3rem;
+    background: #fff;
+    box-shadow: 0 2px 6px #666;
+    z-index: 999;
+
+    .full-width {
+      flex: 1;
+      // min-width: 220px;
+    }
+
+    input[type="text"].search-input {
+      border: none;
+
+      &:focus {
+        outline: 0;
+      }
+    }
+
+    button {
+      height: 36px;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    button.search-button {
+      width: 36px;
+      border-radius: 100%;
+      border: none;
+      background: white url('../../assets/images/search.png') no-repeat;
+      background-size: cover;
+    }
+
+    button.btn.btn-round {
+      line-height: 1rem;
+      padding: .5rem 1.25rem;
+      background-color: white;
+      border-color: #3C9E95;
+      color: #3C9E95;
+      span.text {
+        & ~ i { }
+      }
+
+      &:last-child { }
+      i { }
+    }
+
+
+  }
+
+  .nb-card-header-mobile {
+    padding: 3px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 6px #666;
+    z-index: 999;
+
+    .full-width {
+      flex: 1;
+      // min-width: 220px;
+    }
+
+    input[type="text"].search-input {
+      border: none;
+      font-size: small;
+      text-align: center;
+      font-style: italic;
+      &:focus {
+        outline: 0;
+      }
+    }
+
+    button {
+      height: 36px;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    button.search-button {
+      width: 36px;
+      border-radius: 100%;
+      border: none;
+      background: white url('../../assets/images/search.png') no-repeat;
+      background-size: cover;
+    }
+
+    button.btn.btn-round {
+      line-height: 1rem;
+      padding: .5rem 1.25rem;
+      background-color: white;
+      border-color: #3C9E95;
+      color: #3C9E95;
+      span.text {
+        & ~ i { }
+      }
+
+      &:last-child { }
+      i { }
+    }
+
+
+  }
+
+}
+
+.infoButton:hover, .infoButton:focus, .infoButton:active {
+  color: nb-theme(color-fg-text)
+}
+
+//.negozioMost {
+//  border: 1px solid #eee;
+//}
+
+//.round {
+//  width: 100%;
+//  border-radius: 15px;
+//  border: 1px #000 solid;
+//  padding: 5px 5px 5px 25px;
+//  position: absolute;
+//  top: 0;
+//  left: 0;
+//  z-index: 5;
+//}
+//
+//input[type="text"].round {
+//  border:0;
+//}
+//
+//input[type="text"].round:focus {
+//
+//}
+
+//nb-accordion {
+//  box-shadow: none;
+//}
+
+//#item {
+//  width: 50%;
+//  margin: auto;
+//  overflow: auto;
+//}
+
+//::ng-deep.ng-trigger-accordionItemBody{
+//  overflow: auto !important;
+//}
+
+//.goToSpan {
+//  text-align: right;
+//}
+
+//.descriptionMostViewed {
+//  text-align: center;
+//}
+
+//.mostViewed{
+//  background: #F1F8F8;
+//}
+
+.searchbox {
+  width: 30%;
+  margin: 10% auto auto;
+}
+
+.scopri {
+  width: 30%;
+  height: 100%;
+  margin: 10% auto auto;
+  // margin-bottom: 40%;
+}
+
+.searchHead {
+  font-size: 50px;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 12px;
+  text-shadow: 0 2px 5px #333;
+  margin: 0;
+  line-height: 60px;
+}
+
+.searchHead b {
+  font-weight: 700;
+}
+
+.searchSub {
+  font-size: 28px;
+  text-align: center;
+  letter-spacing: 3px;
+  text-shadow: 0 1px 2px #111;
+  margin:30px 0 50px;
+  color: #fff;
+}
+
+.search-list {
+  &:first-child {
+    padding-top: 1.25rem;
+  }
+  &:last-child {
+    padding-bottom: 1.25rem;
+  }
+
+  nb-list {
+    padding: 0;
+    margin: 0;
+
+    nb-list-item {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      padding-left: 2rem;
+      &:hover,
+      &:focus {
+        background-color: #D8D8D8;
+      }
+    }
+  }
+
+  a.menuTitle {
+    text-decoration: none;
+
+    h3 {
+      margin: 0;
+      padding-bottom: 0.5rem;
+      padding-left: 1.25rem;
+
+      &:hover,
+      &:focus {
+        background: #D8D8D8;
+      }
+    }
+  }
+}
+
+//.swiper-container {
+//  height: 100%;
+//   // overflow: scroll;
+//}
+
+//.vetrinaDescription {
+//  text-align: center;
+//}
+//
+//.vetrinaSlide {
+//   //height: 100%;
+//}
+
+//.cardVetrina {
+//  margin-bottom: 0;
+//}
+
+//.vetrina {
+//  width: 100%;
+//  margin: auto;
+//  max-height: 500px;
+//  padding: 20px;
+//  padding-left: 10%;
+//  padding-right: 10%;
+//  bottom:0;
+//}
+
+//.chat{
+//  margin-left: auto;
+//  margin-right: auto;
+//  display: block;
+//}
+//
+//.footer{
+//  background: #3B9D94;
+//}
+//
+//.vetrina span{
+//  width: 100%
+//}
+//
+//.negozioVetrina{
+//  padding:4px;
+//}
+//
+ion-icon {
+  font-size: 64px;
+}
+
+//input{
+//  font-size: 15px;
+//}
+//
+//.corner {
+//  position: absolute;
+//  right: 5px;
+//  top: 3px;
+//  // left: 5px;
+  //height: 30px;
+  //width: 30px;
+  //z-index: 10;
+  //border-radius: 10px;
+  //border: none;
+  //background-image: url('../../assets/images/search.png');
+  //background-size: contain;/* Set the bg image here. with "no-repeat" */
+  //background-repeat:no-repeat;
+  //background-color:white;
+//}
+//.cornerLabel {
+//  position: absolute;
+//  right: 45px;
+//  top: 3px;
+//  // left: 5px;
+//  height: fit-content;
+//  width: 20px;
+//  z-index: 10;
+//  border-radius: 10px;
+//  border: none;
+//  background-color:  nb-theme(color-primary)
+//}
+
+//.search {
+//  position: relative;
+//  width: 100%;
+//  height: 30px;
+//}
+
+//#search-form{
+//  margin: auto;
+//  width: 100%;
+//}
+
+.nb-loop-style{
+  color: #3C9E95 !important;
+  font-size: 19px;
+  float:right;
+  position:relative;
+  top: -3px;
+  left: 3px;
+}
+.gender-label{
+  margin-top: 2px;
+  text-transform: uppercase;
+}

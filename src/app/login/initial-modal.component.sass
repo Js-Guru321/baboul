@@ -1,0 +1,40 @@
+@import ./common
+
+@include nb-install-component()
+  ::ng-deep .modal-content
+    border: none
+    a.register-link, a.forgot-password-link, a.login-link
+      font-weight: bolder
+      text-decoration: underline
+
+    .modal-body
+      padding: 2.25rem
+      .response-error-message
+        display: none
+        margin-top: 28px
+
+      .is-invalid.invalid-feedback,
+      .is-invalid.response-error-message
+        display: flex !important
+
+      .image-container
+        img
+          width: 100%
+          height: auto
+          @media(max-width: 768px)
+            max-width: 222px
+
+  ::ng-deep .modal-dialog
+    max-width: 800px
+    max-height: 100vh
+
+  ::ng-deep .fade.show
+    background: rgba(0, 0, 0, .5) !important
+
+  ::ng-deep .modal-content .links
+    font-family: 'Avenir', serif
+    p ~ p
+      margin-top: 16px
+    a.register-link, a.forgot-password-link
+      font-weight: bolder
+      text-decoration: underline

@@ -1,0 +1,77 @@
+@import ../../theme.scss
+
+.layoutWrapper
+  padding: 20px 12%
+  @media(max-width: 576px)
+    padding: 20px 2%
+
+@media(max-width: 576px)
+  ::ng-deep .ngx-pagination
+    padding: 0px
+
+li.alphabet
+  padding: 0.1875rem 0.225rem
+
+button
+  float: right
+
+//
+// .result
+//   width: fit
+//   height: 50px
+
+.buttonGender
+  width: 100px
+  text-transform: lowercase
+  font-weight: bold
+  @media(max-width: 576px)
+    width: 60px
+.btn-disabled
+  opacity: 1!important
+
+.present
+  font-style: italic
+  color: gray
+
+.labelGender
+  float: right
+  text-transform: lowercase
+  /* width: 70px */
+  border-radius: 0.75rem
+  text-align: center
+  padding: 0.5rem 1.25rem
+  font-size: 0.75rem
+  color: white
+  font-weight: bolder
+  line-height: 1.25
+  @media(max-width: 576px)
+    font-size: 0.75rem
+    padding: 0.5rem 0.75rem
+.labelUomo
+  background: #3c9e95
+
+.labelDonna
+  background: #ff4c6a
+
+
+customColumn
+  position: fixed
+
+span.resultTitle
+  cursor: pointer
+
+
+span.resultTitle:hover
+  text-decoration: underline
+
+::ng-deep nb-layout-header nav
+  padding: 0.85rem
+  app-search
+    width: 80% !important
+    margin: auto
+    nb-card.search
+      width: auto !important
+      nb-card-header
+        padding: .15rem !important
+        box-shadow: none !important
+        border: 1px solid nb-theme(color-primary) !important

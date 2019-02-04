@@ -1,0 +1,35 @@
+<nb-layout>
+ <nb-layout-header fixed>Testo Cercato</nb-layout-header>
+ <!-- <nb-layout-footer></nb-layout-column> -->
+ <nb-layout-column>
+
+   <nb-card>
+     <nb-card-body>
+
+       <div *ngFor='let result of results' class='result'>
+         <span class='resultTitle'>
+           {{result.title}}
+         </span>
+         <span class='resultGender'>
+           {{result.gender}}
+         </span>
+       </div>
+    </nb-card-body>
+   </nb-card>
+
+  </nb-layout-column>
+  <nb-layout-column>
+    <nb-card>
+      <nb-card-header>
+        <h1 class='filter'>Filtra</h1>
+      </nb-card-header>
+      <nb-card-header>
+        Sesso
+      </nb-card-header>
+      <nb-card-body>
+        <nb-checkbox>Uomo</nb-checkbox><br />
+        <nb-checkbox>Donna</nb-checkbox>
+     </nb-card-body>
+   </nb-card>
+  </nb-layout-column>
+</nb-layout>

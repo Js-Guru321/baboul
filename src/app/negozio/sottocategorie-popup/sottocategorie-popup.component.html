@@ -1,0 +1,21 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close closeButton" (click)="close()" >&times;</button>
+      <img src='assets/images/logo_grey.png' />
+    </div>
+    <div class="modal-body">
+      <span>
+        Vuoi vedere altri negozi che hanno quest{{title}}?
+      </span>
+      <button class='altriNegozi' nbButton shape="round" size="large" status="success" routerLink="../../negozi/bologna/{{sesso | lowercase}}/{{friendlyUrl(item)}}-{{id}}" (click)='close()'>
+        Visualizza altri Negozi
+      </button>
+      <button class='stayNegozi' nbButton shape="round" size="large" status="success" (click)="close()">
+          Rimani su questo Negozio
+      </button>
+      <nb-checkbox class='checkbox' [(ngModel)]="uomoCheck" (ngModelChange)='genderChange()'><i>Non mostrare piú questo messaggio</i></nb-checkbox><br />
+
+    </div>
+  </div>
+</div>

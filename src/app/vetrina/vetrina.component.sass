@@ -1,0 +1,388 @@
+@import ../../theme
+
+@include nb-install-component()
+  .headWrapper
+    display: inline-flex
+    width: 100%
+  ::ng-deep .vetrina-header
+    .nav-content
+      width: 100%
+    > nav
+      height: 65px
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06)
+    .navWrapper
+      width: 74%
+      max-width: 913px
+      h3
+        text-align: center
+        font-size: 26px
+        font-weight: 900
+        letter-spacing: 6.5px
+    ~ .content
+      padding-top: 44px
+      padding-bottom: 20px
+  .promos-list-item
+    max-width: 913px
+    .negozio-title, .negozio-title:hover, .negozio-title:focus
+      text-decoration: none
+    .list-title-mobile
+      margin-bottom: 0
+    .col-list-title-mobile
+      display: flex
+      flex-direction: row
+      align-items: flex-start
+      a
+        align-self: center
+
+  .promos-grid
+    .row
+      margin-left: 0
+      margin-right: 0
+      width: 100%
+    max-width: 913px
+    padding: 19px 0 19px 16px
+    display: flex
+    flex-flow: row
+    .promo-img-wrapper
+      &:before
+        content: ''
+        float: left
+        padding-top: 100%
+      flex: 0 0 33.333333%
+      width: 33.333333%
+      padding-left: 0
+      padding-right: 16px
+      //&:nth-child(3n)
+      //  padding-right: 0
+      &:nth-child(1n+4)
+        padding-top: 16px
+      .promo-img
+        overflow: hidden
+        img, .img
+          cursor: pointer
+          padding-bottom: 100%
+          background-clip: border-box
+          background-position: center
+          background-size: cover
+          -webkit-transition: all .5s
+          -moz-transition: all .5s
+          -ms-transition: all .5s
+          -o-transition: all .5s
+          transition: all .5s
+
+          &:hover
+            background-color: rgba(26, 18, 18, 0.45)
+            background-blend-mode: multiply
+            //opacity: .5
+            -webkit-transform: scale(1.25)
+            -moz-transform: scale(1.25)
+            -ms-transform: scale(1.25)
+            -o-transform: scale(1.25)
+            transform: scale(1.25)
+  .promos-grid-mobile
+    padding: 0 !important
+    .promo-img-wrapper-mobile
+      padding-right: 1px !important
+      &:nth-child(1n+4)
+        padding-top: 1px
+    //.right-padding-0
+    //  padding-right: 0px !important
+
+  .list-img-wrapper
+    &:before
+      content: ''
+      float: left
+      padding-top: 100%
+    flex: 100%
+    width: 100%
+    padding-left: 0
+    //padding-right: 16px
+    //&:nth-child(3n)
+    //  padding-right: 0
+    &:nth-child(1n+4)
+      padding-top: 16px
+    .promo-img
+      overflow: hidden
+      img, .img
+        cursor: pointer
+        padding-bottom: 100%
+        background-clip: border-box
+        background-position: center
+        background-size: cover
+        -webkit-transition: all .5s
+        -moz-transition: all .5s
+        -ms-transition: all .5s
+        -o-transition: all .5s
+        transition: all .5s
+
+        &:hover
+          background-color: rgba(26, 18, 18, 0.45)
+          background-blend-mode: multiply
+          //opacity: .5
+          -webkit-transform: scale(1.25)
+          -moz-transform: scale(1.25)
+          -ms-transform: scale(1.25)
+          -o-transform: scale(1.25)
+          transform: scale(1.25)
+    //@media only screen and (max-width: 1160px)
+    //  //padding: 10px 7px
+    //  //.promo-img-wrapper
+    //  //  margin-right: 7px
+    //  //  &:nth-child(3n)
+    //  //    margin-right: 0
+    //  //  &:nth-child(1n+4)
+    //  //    margin-top: 7px
+    //  .promo-img-wrapper
+    //    width: 33.333333%
+    //    //height: 33.333333%
+    //    padding-bottom: 33.333333%
+    //    .promo-img
+    //      max-width: 263px
+    //      max-height: 263px
+    //      img
+    //        max-width: 263px
+    //        max-height: 263px
+.imagePromoMobile
+  &:before
+    content: ''
+    float: left
+    padding-top: 100%
+  flex: 0 0 100%
+  width: 100%
+  //padding-left: 0
+  //padding-right: 16px
+  //&:nth-child(3n)
+  //  padding-right: 0
+  //&:nth-child(1n+4)
+  //  padding-top: 16px
+  .imageContainerMobile
+    overflow: hidden
+    .imageMobile
+      cursor: pointer
+      padding-bottom: 100%
+      background-clip: border-box
+      background-position: center
+      background-size: cover
+      text-align: center
+    img, .img
+      cursor: pointer
+      padding-bottom: 100%
+      background-clip: border-box
+      background-position: center
+      background-size: cover
+      text-align: center
+      -webkit-transition: all .5s
+      -moz-transition: all .5s
+      -ms-transition: all .5s
+      -o-transition: all .5s
+      transition: all .5s
+
+      &:hover
+        background-color: rgba(26, 18, 18, 0.45)
+        background-blend-mode: multiply
+        //opacity: .5
+        -webkit-transform: scale(1.25)
+        -moz-transform: scale(1.25)
+        -ms-transform: scale(1.25)
+        -o-transform: scale(1.25)
+        transform: scale(1.25)
+
+
+.followImageAnimated
+  width: 30%
+  height: 30%
+  margin: auto
+  position: absolute
+.mobileListVetrina
+  width: 100%
+  .row
+    margin: 0
+  .profileNegozio
+    display: flex
+    flex-direction: row
+    img
+      height: 5.5vh
+      width: 5.5vh
+      border-radius: 100%
+      align-self: center
+  .promoMobileListImage
+    width: 100%
+    height: 36vh
+    object-fit: cover
+  .imagePromoMobile
+    margin: 10px 0
+  .socialLinkMobileList
+    margin: 5px 0
+
+.abuse
+  width: 0.5rem
+  height: 1.5rem
+  float: right
+  //margin-left: 100%
+.abuse-mobile
+  margin-left: 0
+  height: 2rem
+
+nb-layout
+  @media (max-width: 576px)
+    padding: 0
+
+
+nb-card
+  width: 80%
+  margin: auto
+  margin-top: 60px
+  @media (max-width: 576px)
+    width: 90%
+.negozio-opened-closed
+      color: #69BAA4
+      font-weight: lighter
+      text-transform: uppercase
+      font-size: 14px
+
+.negozio-closed
+  color: #ff4c6a!important
+
+.title-mobile
+  font-size: 20px !important
+  font-weight: 600 !important
+
+.iconVetrina
+  i
+    font-size: 3rem
+    font-weight: bolder
+    cursor: pointer
+.iconVetrina-mobile
+  i
+    font-size: 41px
+
+.date
+  font-size: 12px
+  font-style: italic
+  display: block
+  margin-bottom: 40px
+.subheader
+  position: fixed
+  width: 100%
+  z-index: 998
+
+.navWrapper
+  width: 80%
+  margin: auto
+  h3
+    // display: inline-block
+    text-align: center
+    font-weight: 600
+    letter-spacing: 5px
+
+    // position: absolute
+    // top: 30%
+    // left: 45%
+    margin: auto
+    text-transform: uppercase
+::ng-deep.subheader
+  nav
+    padding: 0 2.45rem!important
+
+.layoutColumn
+  margin-top: 100px
+
+
+.negozioListAvatar
+  font-weight: bolder
+  margin: 20px
+
+.promoList
+  padding: 20px
+
+.promoListSingle
+  padding: 20px
+  text-align: center
+
+.imageDiv
+  position: relative
+  // height: 25vw
+  overflow: hidden
+
+
+.imageList
+  max-height: 100%
+  max-width: 100%
+
+  position: absolute
+  margin: auto
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+
+::ng-deep.negozioListAvatar > .user-container
+  margin: auto
+  display: block !important
+::ng-deep.negozioListAvatar > .user-container > .user-picture
+  margin: auto
+  height: 5.25rem !important
+  width: 5.25rem !important
+::ng-deep.negozioListAvatar > .user-container > .info-container
+  margin-left: 0 !important
+  font-weight: 600
+  color: black
+  letter-spacing: 2.2px
+span.distance
+  display: block
+  margin-bottom: 5px
+  font-size: 14px
+span.messaggio
+  display: block
+  font-weight: 300
+  margin-bottom: 25px
+span.messaggio-desktop
+  display: flex
+  font-weight: 300
+  margin-bottom: 0px
+  height: 39%
+  vertical-align: middle
+  align-items: center
+
+.col-list
+  display: flex
+  a, img
+    align-self: center  
+.list-title-mobile
+  font-weight: bolder
+  letter-spacing: 2.2px
+  font-size: 1rem
+
+::ng-deep app-vetrina > nb-layout .layout-container
+  padding-top: 4.75rem
+
+::ng-deep body.app-mobile app-vetrina .vetrina-header .navWrapper
+  width: 100%!important
+
+::ng-deep body.app-is app-vetrina .promos-grid
+  padding: 0 !important
+  margin-left: 14px
+  margin-right: 14px
+  max-width: 100% !important
+  width: calc(100% - 28px)
+
+  .promo-img-wrapper
+    padding-right: 1px !important
+    padding-top: 1px !important
+
+
+::ng-deep .app-mobile
+  app-vetrina
+    .vetrina-header
+      top: 0 
+    .vetrina-header ~ .content
+      padding-top: 0px!important
+
+
+
+nb-list-item
+  border-bottom: unset
+.open-closed-distance-container-mobile
+  display: flex
+  flex-direction: column
+  align-items: flex-end

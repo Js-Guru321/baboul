@@ -1,0 +1,22 @@
+<nb-card>
+  <nb-card-header>
+    Generazione Sitemap
+  </nb-card-header>
+
+  <nb-list>
+      <nb-list-item>
+          <a (click)="download(3)" style="cursor:pointer">Scarica il file <b>sitemap.xml (luoghi) /totale: {{sites_base.length}}</b></a>
+      </nb-list-item>
+      <nb-list-item>
+          <a (click)="download(1)" style="cursor:pointer">Scarica il file <b>sitemap.xml (categorie) /totale: {{sites_cat.length}}</b></a>
+      </nb-list-item>
+      <nb-list-item>
+          <a (click)="download(2)" style="cursor:pointer">Scarica il file <b>sitemap.xml (brands) /totale: {{sites_brand.length}}</b></a>
+      </nb-list-item>
+      <nb-list-item>
+          <a (click)="download(0)" style="cursor:pointer">Scarica il file <b>sitemap.xml (categorie & brands) /totale: {{sites_cat_brand.length}}</b></a>
+      </nb-list-item>
+  </nb-list>
+
+  <nb-card-footer></nb-card-footer>
+</nb-card>

@@ -1,0 +1,119 @@
+ <!-- <nb-layout-header fixed>
+   <input type="text" [(ngModel)]="searchString" name="search" (ngModelChange)="p=1" class="round"  />
+ </nb-layout-header> -->
+ <!-- <nb-layout-footer></div> -->
+
+ <nb-layout-header subheader fixed>
+   <app-search></app-search>
+ </nb-layout-header>
+
+<div class='row layoutWrapper'>
+
+
+ <div class='col-lg-8 col-xs-12'>
+
+   <nb-card>
+     <nb-card-header>
+       <div #lista>
+         <ul class="ngx-pagination" role="navigation" aria-label="Pagination">
+           <li style='cursor: pointer' *ngFor="let letter of alphabetHelper" class='alphabet' [ngClass]='{"present": letter.state==false}' ><span (click)="filterLetterClick(letter)">{{letter.letter}}</span></li>
+
+          </ul>
+      </div>
+
+     </nb-card-header>
+     <nb-card-body>
+
+
+       <!-- <div *ngFor='let item of list | sortBy: false : "nome" |filterBy: searchString  |filterBy: filterGender :"sesso" |  filterByLetter: filterLetter : "nome"| paginate: { itemsPerPage: 30, currentPage: p }' class='result'>
+         <span class='resultTitle' [routerLink]="[url, item.id]">
+           {{item.nome}}
+         </span>
+         <span class='resultGender'>
+           <button nbButton size='xsmall' outline status="success" shape='semi-round'>{{item.sesso}}</button>
+         </span>
+       </div> -->
+       <!-- CATEGORIE E NEGOZI -->
+       <nb-list *ngIf='snap=="categorie"'>
+
+        <nb-list-item *ngFor='let item of categorieList |sortBy: false : "nome" |filterBy: searchString  |filterBy: filterGender :"sesso" | baboulArrayFilterLetter: filterLetter : "nome" |  paginate: { itemsPerPage: 30, currentPage: p, id: "main" }' class='result'>
+          <span class='resultTitle' routerLink="../../negozi/{{luogo}}/{{item.sesso | lowercase}}/{{friendlyUrl(item.nome)}}-{{item.id}}">
+            {{item.nome}}
+          </span>
+          <!-- <span class='resultGender'> -->
+            <span class='labelGender labelUomo' *ngIf="item.sesso=='UOMO'">{{item.sesso}}</span>
+            <span class='labelGender labelDonna' *ngIf="item.sesso=='DONNA'">{{item.sesso}}</span>
+            <!-- <button nbButton class='buttonGender' size='xsmall' outline status="success" shape='semi-round' *ngIf="item.sesso=='UOMO'">{{item.sesso}}</button> -->
+            <!-- <button nbButton class='buttonGender' size='xsmall' outline status="danger" shape='semi-round' *ngIf="item.sesso=='DONNA'">{{item.sesso}}</button> -->
+
+          <!-- </span> -->
+        </nb-list-item>
+      </nb-list>
+
+      <!-- BRAND -->
+
+       <nb-list *ngIf='snap=="brand"'>
+          <nb-list-item *ngFor='let item of brandList |sortBy: false :"nome" :true :"brand" |filterBy: searchString :"nome" :true :"brand" |baboulArrayFilterLetter: filterLetter :"nome" :true :"brand"   |filterBy: filterGender :"sesso" :true :"brand"  |  paginate: { itemsPerPage: 30, currentPage: p , id: "main"}' class='result'>
+          <span class='resultTitle' routerLink="../../negozi/{{luogo}}/{{item.brand.sesso | lowercase}}/{{friendlyUrl(item.brand.nome)}}-{{item.brand.id}}">
+            {{item.brand.nome}}
+          </span>
+          <!-- <span class='resultGender'> -->
+            <!-- <button nbButton size='xsmall' outline status="warning" shape='semi-round'>{{item.counter}}</button> -->
+
+            <span class='labelGender labelUomo' *ngIf="item.brand.sesso=='UOMO'">{{item.brand.sesso}}</span>
+            <span class='labelGender labelDonna' *ngIf="item.brand.sesso=='DONNA'">{{item.brand.sesso}}</span>
+
+          <!-- </span> -->
+        </nb-list-item>
+      </nb-list>
+
+       <nb-list *ngIf='snap=="negozi"'>
+          <nb-list-item *ngFor='let item of list |filterBy: searchString :"nome"  | filterBy: "true" :"attivo" | baboulArrayFilterLetter: filterLetter :"nome" |  paginate: { itemsPerPage: 30, currentPage: p , id: "main"}' class='result'>
+          <span class='resultTitle' [routerLink]="['/negozio', friendlyUrl(item.nome)+'-'+item.id]">
+            {{item.nome}}
+          </span>
+          <!-- <span class='resultGender'> -->
+            <!-- <button nbButton size='xsmall' outline status="warning" shape='semi-round'>{{item.counter}}</button> -->
+            <!-- <button nbButton size='xsmall' outline status="success" shape='semi-round' *ngIf="item.brand.sesso=='UOMO'">{{item.brand.sesso}}</button> -->
+            <!-- <button nbButton size='xsmall' outline status="danger" shape='semi-round' *ngIf="item.brand.sesso=='DONNA'">{{item.brand.sesso}}</button> -->
+
+          <!-- </span> -->
+        </nb-list-item>
+      </nb-list>
+
+      <pagination-controls (pageChange)="pageChange($event)" id="main"></pagination-controls>
+
+    </nb-card-body>
+   </nb-card>
+
+ </div>
+  <div class='col-lg-4 col-xs-12'>
+    <nb-card *ngIf='snap!="negozi"'>
+      <nb-card-header>
+        <h1 class='filter'>Filtra</h1>
+      </nb-card-header>
+      <nb-card-header>
+        Sesso
+      </nb-card-header>
+      <nb-card-body>
+        <div class="form-check">
+          <label class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" [(ngModel)]="Gender" [value]="1" name="gender" (ngModelChange)="filterGender = 'UOMO'">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">UOMO</span>
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" name="gender" [(ngModel)]="Gender" [value]="2" (click)="filterGender = 'DONNA'">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">DONNA</span>
+          </label>
+        </div>
+
+
+     </nb-card-body>
+   </nb-card>
+
+ </div>
+ </div>

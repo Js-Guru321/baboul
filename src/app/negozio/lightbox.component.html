@@ -1,0 +1,53 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body">
+      <swiper class="swiper-container" [config]="swiperConfig" [(index)]="index">
+        <!--<div class="swiper-wrapper">-->
+          <div class="swiper-slide" *ngFor="let image of images; let i = index;">
+            <img src="{{ images | storePictureOrDefault: i}}">
+            <!-- Required swiper-lazy class and image source specified in data-src attribute -->
+            <!--<img src="{{ images | storePictureOrDefault: i}}" class="swiper-lazy">-->
+            <!-- Preloader image -->
+            <!--<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>-->
+          </div>
+        <!--</div>-->
+
+      </swiper>
+
+      <!-- Add Arrows -->
+      <div class="d-none">
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+      </div>
+      <!-- Add Pagination -->
+      <div class="swiper-pagination swiper-pagination-white"></div>
+      <button type="button" class="close" (click)="close()">&times;</button>
+
+      <!--<div class='row'>-->
+        <!--<div class='col-1'>-->
+          <!--<span (click)="prev()" class='arrow left' *ngIf='hasPrevious()'>-->
+            <!--<i class='nb-arrow-left'></i>-->
+          <!--</span>-->
+        <!--</div>-->
+        <!--<div class='col-10 image'>-->
+          <!--<img src="{{images | storePictureOrDefault: index}}">-->
+        <!--</div>-->
+        <!--<div class='col-1'>-->
+          <!--<span (click)="next()" class='arrow right' *ngIf='hasNext()'>-->
+            <!--<i class='nb-arrow-right'></i>-->
+          <!--</span>-->
+        <!--</div>-->
+      <!--</div>-->
+
+    </div>
+    <!--<div class="modal-footer">-->
+      <!--<div class='thumbWrapper'>-->
+        <!--<span (click)="goTo(i)" *ngFor='let image of images, let i = index' [class.thumbActive]="i === index" class="dot"></span>-->
+        <!-- <img *ngFor='let image of images, let i=index' src="/shopadvisor/images/negozi/{{image.nomeFile}}" [ngClass]="{thumbActive: i==index}"> -->
+      <!--</div>-->
+
+      <!-- <button type="button" class="btn btn-primary" (click)="confirm()">OK</button> -->
+      <!-- <button type="button" class="btn btn-default" (click)="close()" >Cancel</button> -->
+    <!--</div>-->
+  </div>
+</div>

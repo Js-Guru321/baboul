@@ -1,0 +1,29 @@
+<nb-chat title="Chatta con Baboul" class='chatMessages' [hidden]="hideMessages" status="success" size='small'>
+  <nb-chat-message *ngFor="let msg of messages"
+                   [type]="msg.type"
+                   [message]="msg.text"
+                   [reply]="msg.reply"
+                   [sender]="msg.user.name"
+                   [date]="msg.date"
+                   [files]="msg.files"
+                   [quote]="msg.quote"
+                   [latitude]="msg.latitude"
+                   [longitude]="msg.longitude"
+                   avatar="{{ msg.user.avatar | userPictureOrDefault }}">
+  </nb-chat-message>
+
+  <nb-chat-form *ngIf="user" placeholder="Scrivi un messaggio..." (send)="sendMessage($event)" [dropFiles]="true"></nb-chat-form>
+</nb-chat>
+
+<div class='col-1 chatBubble' (click)="toggle()">
+  <img class='chat' src="assets/images/chat.png" style='cursor: pointer' />
+</div>
+
+<ng-template #loading>
+  <div class="loading" [class.active]="isSending">
+    <div class="spinner">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
+  </div>
+</ng-template>

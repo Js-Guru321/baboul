@@ -1,0 +1,48 @@
+<ng-container [ngSwitch]="type">
+  <ng-container *ngSwitchCase="'icon'">
+    <ng-container *ngTemplateOutlet="icon"></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'button'">
+    <ng-container *ngTemplateOutlet="button"></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <ng-container *ngTemplateOutlet="button"></ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #button>
+  <button
+      class="follow-button"
+      [class.small]="small"
+      [class.follow-button-followed]="followed"
+      nbButton
+      (click)='onClick()'
+      size="{{size}}"
+      shape="semi-round"
+      status="success">
+    <span class="button-text">{{title}}</span>
+    <span class="button-icon">
+      <!--<img src="/assets/images/follow.png">-->
+      <!--<i class="nb-star fa-2x"-->
+      <!--[class.fa-2x]="small"-->
+      <!--[class.fa-3x]="!small"-->
+      <!--&gt;</i>-->
+    </span>
+  </button>
+</ng-template>
+
+<ng-template #icon>
+  <div class='follow-button'
+       [class.small]="small"
+       [class.scale-up-center-animation]="isAnimating"
+       [class.follow-button-followed]="followed"
+       (click)='onClick()'>
+    <span class="button-icon">
+      <!--<img src="/assets/images/follow.png">-->
+      <!--<i class="nb-star fa-2x"-->
+         <!--[class.fa-2x]="small"-->
+         <!--[class.fa-3x]="!small"-->
+      <!--&gt;</i>-->
+    </span>
+  </div>
+</ng-template>

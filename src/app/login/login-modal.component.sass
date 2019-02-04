@@ -1,0 +1,94 @@
+@import ./common
+
+@include nb-install-component()
+  .login-row
+    margin-top: 30px
+    .input-col
+      margin-bottom: 35px
+
+    input[type="text"], input[type="password"]
+      outline: none
+      border: 0
+      border-bottom: 1px solid grey
+      padding: 8px
+      -webkit-border-radius: 0
+      -moz-border-radius: 0
+      border-radius: 0
+      &:focus
+        border-bottom: 2px solid grey
+
+//.loginInput
+  display: block
+  margin: auto
+  border: 0px
+  border-bottom: 1px solid grey
+  margin-bottom: 35px
+  margin-top: 30px
+  width: 70%
+  text-align: left
+  padding: 8px
+
+.modal-footer
+  font-family: 'Avenir', serif
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .5)
+  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5)
+  p ~ p
+    margin-top: 16px
+  a.register-link, a.forgot-password-link
+    font-weight: bolder
+    text-decoration: underline
+
+.loginSpan, .loginButton
+  display: block
+  margin: auto
+
+.logo
+  display: block
+  width: 220px
+  margin: 20px auto 30px
+
+.loginSpan
+  font-size: 20px
+  margin-bottom: 20px
+  text-align: center
+  line-height: 26px
+  color: #898587
+
+.loginInput
+  display: block
+  margin: auto
+  border: 0px
+  border-bottom: 1px solid grey
+  margin-bottom: 35px
+  margin-top: 30px
+  width: 70%
+  text-align: left
+  padding: 8px
+
+.loginButton
+  //margin: 60px auto!important
+  background-color: #6EBFAB!important
+  font-weight: 400
+  font-size: 22px!important
+  width: 80%
+  margin-top: 40px
+  box-shadow: 5px 5px 10px #ccc
+  -webkit-box-shadow: 5px 5px 10px #ccc
+
+.fade.show
+  background: rgba(0, 0, 0, .5)
+
+//.modal-body
+  //box-shadow: 10px 10px 15px rgba(0,0,0,.5)
+  //-webkit-box-shadow: 10px 10px 15px rgba(0,0,0,.5)
+
+.modal-content
+  border: none
+
+.response-error-message
+  display: none
+  margin-top: 28px
+
+.is-invalid.invalid-feedback,
+.is-invalid.response-error-message
+  display: flex !important

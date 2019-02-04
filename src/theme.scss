@@ -1,0 +1,102 @@
+@import '~@nebular/theme/styles/theming';
+@import '~@nebular/theme/styles/themes/default';
+@import '~@nebular/theme/styles/themes/cosmic';
+@font-face {
+    font-family: 'Avenir';
+    src: url('/assets/fonts/Avenir-Book-01.ttf');
+}
+@font-face {
+    font-family: 'Avenir';
+    src: url('/assets/fonts/Avenir-BookOblique-02.ttf');
+    font-style: italic;
+
+}
+@font-face {
+    font-family: 'Avenir';
+    src: url('/assets/fonts/Avenir-Light-07.ttf');
+    font-weight: 100;
+    font-weight: lighter;
+}
+@font-face {
+    font-family: 'Avenir';
+    src: url('/assets/fonts/Avenir-LightOblique-08.ttf');
+    font-weight: 100;
+    font-weight: lighter;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Avenir';
+    src: url('/assets/fonts/Avenir-Medium-09.ttf');
+    font-weight: 300
+}
+@font-face {
+    font-family: 'Avenir';
+    src: url('/assets/fonts/Avenir-MediumOblique-10.ttf');
+    font-weight: 300;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Avenir';
+    src: url('/assets/fonts/Avenir-Heavy-05.ttf');
+    font-weight: 400;
+    font-weight: bold;
+
+}
+@font-face {
+    font-family: 'Avenir';
+    src: url('/assets/fonts/Avenir-HeavyOblique-06.ttf');
+    font-weight: 400;
+    font-weight: bold;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Avenir';
+    src: url('/assets/fonts/Avenir-Black-03.ttf');
+    font-weight: 600;
+    font-style: bolder;
+
+}
+@font-face {
+    font-family: 'Avenir';
+    src: url('/assets/fonts/Avenir-BlackOblique-04.ttf');
+    font-weight: 600;
+    font-style: bolder;
+    font-style: italic;
+
+}
+
+
+$nb-enabled-themes: (default, dark);
+
+// default theme
+$nb-themes: nb-register-theme((
+
+color-fg-highlight: #3c9e95,
+
+  // color-primary: #3c9e95,
+  // link-color: #3c9e95,
+  // color-bg: #4ca6ff,
+  // shadow: 0 1px 2px 0 #3780c0,
+  // layout-bg: #ffffff,
+  // color-fg: #222222,
+  // layout-content-width: 300px
+
+), default, default);
+
+
+// dark theme
+$nb-themes: nb-register-theme((
+
+  layout-column-padding: 2.25rem 5.25rem 0.75rem,
+  font-main: 'Avenir',
+  color-fg-text: #1A130d,
+  layout-bg: #FAFCFC,
+  footer-bg: #423C40,
+  color-bg: 	#ffffff,
+  link-color: #3c9e95,
+  color-info: #3c9e95,
+  color-success: #3c9e95,
+  color-primary: #3c9e95,
+  link-color-hover: #3c9e95,
+  color-fg-highlight: #3c9e95,
+), dark, default);

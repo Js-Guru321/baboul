@@ -1,0 +1,20 @@
+<button *ngIf='!small'
+        class='followButton'
+        [class.followButtonGreen]="!notFollowed"
+        (click)="onClick(); $event.stopPropagation()"
+        nbButton
+        size='medium'
+        shape='semi-round' status="success">Follow!
+        <img class='right' src='/assets/images/follow.png' *ngIf="notFollowed"/>
+        <img class='right' src='/assets/images/followGreen.png' *ngIf="!notFollowed"/>
+</button>
+
+<img *ngIf='(small && notFollowed)'
+     class='followImg'
+     (click)='onClick(); $event.stopPropagation()'
+     src="/assets/images/follow.png">
+
+<img *ngIf='(small && !notFollowed)'
+     class='followImg'
+     (click)='onClick(); $event.stopPropagation()'
+     src="/assets/images/followGreen.png">

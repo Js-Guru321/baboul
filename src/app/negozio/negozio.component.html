@@ -1,0 +1,795 @@
+<!-- <gallery [items]="images" thumbPosition="left" [loadingStrategy]='preload' [autoPlay]='true'></gallery> -->
+
+<!-- <nb-layout> -->
+  <nb-layout-column>
+    <!-- Header -->
+    <div class='row no-gutters wrapCard mainWrapCard'>
+      <div class='col-12'>
+        <nb-card class="header-card">
+
+          <nb-card-header class="header-cover">
+              <!-- Piú di due immagini -->
+              <div class='row no-gutters header-img-wrapper header-img-3' *ngIf='negozio.immagini && negozio.immagini.length > 2'>
+                <div class='col-7 pr-0 header-img-3-1'>
+                  <div class="header-img">
+                    <img (click)='showLightBox(0)' src="{{ negozio | storePictureOrDefault: 0 }}">
+                  </div>
+                </div>
+                <div class='col-5 header-img-3-2'>
+                  <div class='row no-gutters leftImage'>
+                    <div class='col-12 header-img-3-2-1'>
+                      <div class="header-img">
+                        <img *ngIf='negozio.immagini[1]' (click)='showLightBox(1)' src="{{negozio | storePictureOrDefault: 1}}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class='row no-gutters leftImage'>
+                    <div class='col-12 header-img-3-2-2'>
+                      <div class="header-img">
+                        <img *ngIf='negozio.immagini[2]' (click)='showLightBox(2)' src="{{negozio | storePictureOrDefault: 2}}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 2 immagini -->
+            <div class='row header header-img-wrapper header-img-2' *ngIf='negozio.immagini && negozio.immagini.length == 2'>
+              <div class='col-8 header-img-2-1'>
+                <div class="header-img">
+                  <img (click)='showLightBox(0)' src="{{negozio | storePictureOrDefault}}">
+                </div>
+              </div>
+              <div class='col-4 header-img-2-2'>
+                <div class="header-img">
+                  <img *ngIf='negozio.immagini[1]' (click)='showLightBox(1)' src="{{negozio | storePictureOrDefault: 1}}">
+                </div>
+              </div>
+            </div>
+            <!-- 1 Immagine -->
+            <div class='row header header-img-wrapper header-img-1' *ngIf='negozio.immagini && negozio.immagini.length == 1'>
+              <div class='col-12 header-img-1-1'>
+                <div class="header-img">
+                  <img (click)='showLightBox(0)' src="{{negozio | storePictureOrDefault}}">
+                </div>
+              </div>
+            </div>
+
+          </nb-card-header>
+          <nb-card-header class="header-cover header-cover-mobile">
+            <swiper [config]="swiper.config" [(index)]="swiper.index" class="swiper-container">
+              <ng-container *ngIf="negozio.immagini">
+                <div class="swiper-slide" *ngFor="let image of negozio.immagini | baboulArrayLimitTo: 3; let i = index">
+                  <div class="img" [lazyLoad]="negozio | storePictureOrDefault: i" [offset]="100" (click)="showLightBox(i)"></div>
+                </div>
+              </ng-container>
+            </swiper>
+            <div class="d-none">
+              <div class="swiper-pagination swiper-pagination-white"></div>
+            </div>
+          </nb-card-header>
+          <nb-card-header class="store-name-phone-follow">
+            <span class="store-name">{{ negozio.nome }}</span>
+            <span class="store-phone-follow">
+              <span class="store-phone">
+                <a href="tel:{{ negozio.telefono }}">
+                  <i class="nb-phone fa-3x"></i>
+                </a>
+              </span>
+              <app-followButton [negozioID]='negozio.id'></app-followButton>
+            </span>
+          <!-- <button class='followButton' nbButton size='medium' shape='semi-round' status="success">Follow! <img class='right' src= '/assets/images/follow.png'/></button> -->
+          </nb-card-header>
+
+          <nb-actions size="small" fullWidth #actions>
+            <nb-action class='action-anchor' [ngClass]='{"anchorActive": position=="info"}' (click)='scrollView("info")' >Info</nb-action>
+            <nb-action class='action-anchor' [ngClass]='{"anchorActive": position=="prodotti", "anchor-disabled d-none": !hasProducts}' (click)='scrollView("prodotti"); toggle("products", false);' >Prodotti</nb-action>
+            <nb-action class='action-anchor' [ngClass]='{"anchorActive": position=="brand", "anchor-disabled d-none": !hasBrands}' (click)='scrollView("brand"); toggle("brands", false);' >Brand</nb-action>
+            <nb-action class='action-anchor' [ngClass]='{"anchorActive": position=="vetrina", "anchor-disabled d-none": !hasPromos}' (click)='scrollView("vetrina"); toggle("promos", false);' >Vetrina</nb-action>
+          </nb-actions>
+        </nb-card>
+      </div>
+    </div>
+
+    <div class='row no-gutters wrapCard' [hidden]='!actionsFixed' [ngClass]="{'actionsFixed': actionsFixed}">
+      <div class='col-12'>
+        <nb-card class="header-card">
+          <!--<nb-card-header>
+            <span class="store-name">{{ negozio.nome }}</span>
+            <app-followButton class="float-right" [negozioID]='negozio.id'></app-followButton>
+            &lt;!&ndash; <button class='followButton' nbButton size='medium' shape='semi-round' status="success">Follow! <img class='right' src= '/assets/images/follow.png'/></button> &ndash;&gt;
+          </nb-card-header>-->
+          <nb-card-header class="store-name-phone-follow">
+            <span class="store-name">{{ negozio.nome }}</span>
+            <span class="store-phone-follow">
+              <span class="store-phone">
+                <a href="tel:{{ negozio.telefono }}">
+                  <i class="nb-phone fa-3x"></i>
+                </a>
+              </span>
+              <app-followButton [negozioID]='negozio.id'></app-followButton>
+            </span>
+            <!-- <button class='followButton' nbButton size='medium' shape='semi-round' status="success">Follow! <img class='right' src= '/assets/images/follow.png'/></button> -->
+          </nb-card-header>
+
+          <nb-actions size="small" fullWidth #actions>
+            <nb-action class='action-anchor' [ngClass]='{"anchorActive": position=="info"}' (click)='scrollView("info"); position="info"' >Info</nb-action>
+            <nb-action class='action-anchor' [ngClass]='{"anchorActive": position=="prodotti", "anchor-disabled d-none": !hasProducts}' (click)='scrollView("prodotti"); toggle("products", false)' >Prodotti</nb-action>
+            <nb-action class='action-anchor' [ngClass]='{"anchorActive": position=="brand", "anchor-disabled d-none": !hasBrands}' (click)='scrollView("brand"); toggle("brands", false)' >Brand</nb-action>
+            <nb-action class='action-anchor' [ngClass]='{"anchorActive": position=="vetrina", "anchor-disabled d-none": !hasPromos}' (click)='scrollView("vetrina"); toggle("promos", false)' >Vetrina</nb-action>
+          </nb-actions>
+        </nb-card>
+      </div>
+    </div>
+
+      <!-- Info -->
+    <div class='row no-gutters wrapCard' #info>
+      <div class='col-12'>
+
+        <nb-card class="information-card map-card">
+          <nb-card-body>
+            <div class="row no-gutters">
+
+              <div class='col-lg-7 col-xs-12 information-inner-card'>
+                <div class='store-address'>
+                    <span class='store-address-actions' *ngIf='negozio.urls'>
+                      <a *ngIf='negozio.facebook' target="_blank" href='{{negozio.facebook}}'>
+                        <img  src='/assets/images/facebook-nero.png' />
+                      </a>
+                      <a *ngIf='negozio.instagram' target="_blank" href='{{negozio.instagram}}'>
+                        <img src='/assets/images/instagram-nero.png' />
+                      </a>
+                      <a *ngIf='negozio.sito' target="_blank" href='{{negozio.sito}}'>
+                        <img src='/assets/images/internet.png' />
+                      </a>
+                    </span>
+
+                    <span class="store-address-information" [class.store-address-information-mobile]="isMobileScreen">
+                      <span class="store-address">{{negozio.indirizzo}}</span>
+                      <span class="store-telephone">{{negozio.telefono}}</span>
+                      <span class="store-email">{{negozio.email1}}</span>
+                    </span>
+                </div>
+
+                <div class="store-sub-information">
+                  <div class='store-type store-gender store-type-gender'  *ngIf='negozio.negozioType'>
+                    <p class="store-type" [class.store-type-mobile]="!isDesktopScreen">
+                      <span class="d-block">
+                        <span class="d-inline-block">{{ negozio.negozioType.nome }}</span><br/>
+                        <span class="d-inline-block">{{ negozio | storeGender }}</span>
+                      </span>
+                      <span class="d-block">{{ negozio.tipo }}</span>
+                    </p>
+                  </div>
+                  <div class="store-opened-closed-distance">
+                    <p class="store-opened-closed" [class.store-opened-closed-mobile]="isMobileScreen" [class.store-opened]="negozio | storeOpened" [class.store-closed]="!(negozio | storeOpened)">
+                      {{ negozio | storeOpened: true: [undefined, undefined, '']}}
+                    </p>
+                    <p class="store-distance" [class.store-distance-mobile]="isMobileScreen">
+                      {{ negozio.distanza | storeDistance }}
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class='col-lg-5 col-xs-12 map-inner-card'>
+                <ngui-map style='height: 100%' [options]="mapOptions" (mapReady$)="onMapReady($event)">
+                  <marker [position]="{'lat': negozio.latitudine, 'lng': negozio.longitudine}"
+                          [title]='negozio.nome'
+                          (initialized$)="onMarkerInit($event)"></marker>
+                </ngui-map>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+    </div>
+
+    <!-- Descrizione + Vetrina -->
+
+    <div [class.promos-card]='promos.length > 0' class='row no-gutters wrapCard description-card promos-mini-card'>
+      <div [ngClass]="{'col-lg-7 col-xs-12': promos.length > 0, 'col-12': promos.length == 0}">
+        <nb-card class="description-inner-card">
+          <nb-card-header>
+            <h3 class="d-inline-block card-title">Descrizione</h3>
+          </nb-card-header>
+          <nb-card-body>
+            <span [class.description-mobile]="isMobileScreen">{{negozio.descrizione}}</span>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <div *ngIf="promos.length > 0 && isDesktopScreen" class='col-lg-5 col-xs-12'>
+        <nb-card class="promos-inner-card">
+          <nb-card-header>
+            <h3 class="d-inline-block card-title">Vetrina</h3>
+          </nb-card-header>
+          <nb-card-body>
+            <div class='promos promos-grid' *ngIf='promos.length > 0'>
+              <div *ngFor="let promo of promos | limitTo: 3" class='promo-wrapper promo-wrapper-{{(promos.length | minBetween: 3)}}'>
+                <div class="promo-image">
+                  <!--<img src='{{promo | storePictureOrDefault}}' (click)='goTo(promo.id)'>-->
+                  <div class="img" [lazyLoad]='promo | storePictureOrDefault' [offset]="0" (click)='goTo(promo.id)'></div>
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+          <nb-card-footer>
+            <div class="showMorePromos" (click)='scrollView("vetrina"); toggle("promos", false)'>Mostra Altri ></div>
+          </nb-card-footer>
+        </nb-card>
+      </div>
+    </div>
+
+    <!-- END Descrizione + Vetrina -->
+
+    <!-- Prodotti Uomo + Prodotti Donna -->
+
+    <div *ngIf='negozio.uomo == true && negozio.donna == true'>
+    <!-- SIA UOMO CHE DONNA -->
+    <!-- Prodotti -->
+      <div class='row no-gutters wrapCard products-card products-man-card products-woman-card' #prodotti id="1" *ngIf="hasProducts">
+
+      <div class='col-12'>
+
+        <nb-card>
+          <nb-card-header class='clickableHeader' (click)="toggle('products')">
+            <span class='iconHeader'>
+              <i [class.nb-arrow-up]="!hideProducts" [class.nb-arrow-down]="hideProducts"></i>
+            </span>
+              <h3 class="d-inline-block card-title">
+              Prodotti
+            </h3>
+          </nb-card-header>
+
+          <nb-card-body [hidden]='hideProducts'>
+            <div class='row' [hidden]='isMobileScreen'>
+              <div class='col-6 uomo'>
+                <ng-container *ngTemplateOutlet="templateUomo"></ng-container>
+              </div>
+
+              <div class='col-6'>
+                <ng-container *ngTemplateOutlet="templateDonna"></ng-container>
+              </div>
+            </div>
+            <div [hidden]='!isMobileScreen'>
+              <div class='row'>
+                <div class='col-6'>
+                  <nb-list>
+                    <nb-list-item [ngClass]="{'titleList': showDonna==false}"><i class='nb-arrow-thin-left backMacroCats' [hidden]="!showMicroCatsUomo" (click)="backUomo()"></i><i (click)='showDonna=false'>Uomo</i></nb-list-item>
+                  </nb-list>
+                </div>
+                <div class='col-6'>
+                  <nb-list>
+                    <nb-list-item [ngClass]="{'titleList': showDonna==true}"><i class='nb-arrow-thin-left backMacroCats' [hidden]="!showMicroCats" (click)="backDonna()"></i><i (click)='showDonna=true'>Donna</i></nb-list-item>
+                  </nb-list>
+                </div>
+              </div>
+              <div class='col-12 uomo p-0' [hidden]='showDonna'>
+                <ng-container *ngTemplateOutlet="templateUomo"></ng-container>
+              </div>
+
+              <div class='col-12 donna p-0' [hidden]='!showDonna'>
+                <ng-container *ngTemplateOutlet="templateDonna"></ng-container>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+      <!-- Brand -->
+      <div class='row no-gutters wrapCard brands-card brands-man-card brands-woman-card' #brand *ngIf="hasBrands">
+
+        <div class='col-12'>
+
+          <nb-card>
+            <nb-card-header class='clickableHeader' (click)="toggle('brands')">
+              <span class='iconHeader'>
+                <i [class.nb-arrow-up]="!hideBrands" [class.nb-arrow-down]="hideBrands"></i>
+              </span>
+              <h3 class="d-inline-block card-title">Brand</h3>
+            </nb-card-header>
+            <nb-card-body [hidden]='hideBrands'>
+              <div class='row'>
+                <div class='col-6 uomo'>
+
+                  <nb-list >
+                    <nb-list-item class='titleList'><i>Uomo</i></nb-list-item>
+                  </nb-list>
+                  <nb-list class='list'>
+                    <nb-list-item *ngFor="let brand of negozio.brands | baboulArrayFilterLetter: 'UOMO' : 'sesso' | baboulArrayLimitTo: 5: 0" (click)="brandSearch(brand.nome, brand.sesso, brand.id)">
+                      {{ brand.nome }}
+                    </nb-list-item>
+                  </nb-list>
+                </div>
+                <div class='col-6'>
+
+                  <nb-list >
+                    <nb-list-item class='titleList'><i>Donna</i></nb-list-item>
+                  </nb-list>
+                  <nb-list class='list'>
+                    <nb-list-item *ngFor="let brand of negozio.brands | baboulArrayFilterLetter: 'DONNA' : 'sesso' | baboulArrayLimitTo: 5: 0" (click)="brandSearch(brand.nome, brand.sesso, brand.id)">
+                      {{ brand.nome }}
+                    </nb-list-item>
+                  </nb-list>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- END Prodotti Uomo + Prodotti Donna  -->
+
+    <!-- Prodotti Uomo -->
+    <!-- SOLO UOMO -->
+    <div *ngIf='negozio.donna==false'>
+      <!-- Prodotti -->
+      <div class='row no-gutters wrapCard products-card products-man-card' #prodotti id="2" *ngIf="hasProducts">
+
+        <div class='col-12'>
+
+          <nb-card>
+            <nb-card-header class='clickableHeader' (click)="toggle('products')">
+              <span class='iconHeader'>
+                <i [class.nb-arrow-up]="!hideProducts" [class.nb-arrow-down]="hideProducts"></i>
+              </span>
+              <h3 class="d-inline-block card-title">Prodotti</h3>
+            </nb-card-header>
+            <nb-card-body [hidden]='hideProducts'>
+              <div class='row'>
+                <div class='col-12'>
+                  <ng-container *ngTemplateOutlet="templateUomo"></ng-container>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+      <!-- Brand -->
+      <div class='row no-gutters wrapCard brands-card brands-man-card' #brand *ngIf="hasBrands">
+
+        <div class='col-12'>
+
+          <nb-card>
+            <nb-card-header class='clickableHeader' (click)="toggle('brands')">
+              <span class='iconHeader'>
+                <i [class.nb-arrow-up]="!hideBrands" [class.nb-arrow-down]="hideBrands"></i>
+              </span>
+              <h3 class="d-inline-block card-title">Brand</h3>
+            </nb-card-header>
+            <nb-card-body [hidden]='hideBrands'>
+              <div class='row'>
+                <div class='col-12'>
+                  <nb-list>
+                    <nb-list-item class='titleList'>
+                      <i>Uomo</i>
+                    </nb-list-item>
+                  </nb-list>
+                  <nb-list class='list'>
+                    <nb-list-item *ngFor="let brand of negozio.brands | baboulArrayFilterLetter: 'UOMO' : 'sesso' | baboulArrayLimitTo: 5: 0" (click)="brandSearch(brand.nome, brand.sesso, brand.id)">
+                      {{ brand.nome }}
+                    </nb-list-item>
+                  </nb-list>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+    <!-- END Prodotti Uomo -->
+
+    <!-- Prodotti Donna -->
+    <!-- SOLO DONNA -->
+    <div *ngIf='negozio.uomo==false'>
+      <!-- Prodotti -->
+      <div class='row no-gutters wrapCard products-card products-woman-card' #prodotti id="2" *ngIf="hasProducts">
+
+        <div class='col-12'>
+
+          <nb-card>
+            <nb-card-header class='clickableHeader' (click)="toggle('products')">
+              <span class='iconHeader'>
+                <i [class.nb-arrow-up]="!hideProducts" [class.nb-arrow-down]="hideProducts"></i>
+              </span>
+              <h3 class="d-inline-block card-title">Prodotti</h3>
+            </nb-card-header>
+            <nb-card-body [hidden]='hideProducts'>
+              <div class='row'>
+                <div class='col-12'>
+                  <ng-container *ngTemplateOutlet="templateDonna"></ng-container>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+      <!-- Brand -->
+      <div class='row no-gutters wrapCard brands-card brands-woman-card' #brand *ngIf="hasBrands">
+
+        <div class='col-12'>
+
+          <nb-card>
+            <nb-card-header class='clickableHeader' (click)="toggle('brands')">
+              <span class='iconHeader'>
+                <i [class.nb-arrow-up]="!hideBrands" [class.nb-arrow-down]="hideBrands"></i>
+              </span>
+              <h3 class="d-inline-block card-title">Brand</h3>
+            </nb-card-header>
+            <nb-card-body [hidden]='hideBrands'>
+              <div class='row'>
+                <div class='col-12'>
+                  <nb-list >
+                    <nb-list-item class='titleList'>
+                      <i>Donna</i>
+                    </nb-list-item>
+                  </nb-list>
+                  <nb-list class='list'>
+                    <nb-list-item *ngFor="let brand of negozio.brands | baboulArrayFilterLetter: 'DONNA' : 'sesso' | baboulArrayLimitTo: 5: 0" (click)="brandSearch(brand.nome, brand.sesso, brand.id)">
+                      {{ brand.nome }}
+                    </nb-list-item>
+                  </nb-list>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+    <!-- END Prodotti Donna -->
+
+    <!-- Vetrina -->
+    <div class='row no-gutters wrapCard promos-card' #vetrina *ngIf='hasPromos'>
+
+      <div class='col-12'>
+
+        
+
+        <nb-card class="promos-grid">
+          <nb-card-header (click)="toggle('promos'); $event.stopPropagation" class="clickableHeader text-center">
+            <!-- <nb-actions> </nb-actions> -->
+            <span class='iconVetrina'>
+              <i [class.nb-keypad]="view != 1" [class.nb-list]="view != 2" (click)="switchView(); toggle('promos'); $event.stopPropagation;"></i>
+            </span>
+            <h3 class="d-inline-block card-title">Vetrina</h3>
+            <span class='iconHeader'>
+              <i [class.nb-arrow-down]="hidePromos" [class.nb-arrow-up]="!hidePromos"></i>
+            </span>
+          </nb-card-header>
+
+          <!--<nb-card-body [hidden]="view!=1 || hidePromos">-->
+            <!--<div class='row ml-0' style='width: 100%'>-->
+              <!--<div class='col-4 imageGridDiv imageDiv' *ngFor='let promo of promos'>-->
+                <!--<img class='imageGridImage' (click)='goTo(promo.id)' src='{{promo | storePictureOrDefault}}' style='max-width: 100%'>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</nb-card-body>-->
+          
+          <nb-card-body [hidden]="view != 1 || hidePromos" >
+            <div class='row m-0' #gridPromo>
+              <div class='col-4 promo-img-wrapper' [class.promo-img-wrapper-mobile]="isMobileScreen" *ngFor="let promo of promos">
+                <div class="promo-img">
+                  <div class="img" (click)='goTo(promo.id)' [lazyLoad]="promo | storePictureOrDefault" [offset]="40"></div>
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+
+          <!-- Lista -->
+          <!--<nb-card-body [hidden]="view!=2 || hidePromos" *ngFor='let promo of promos' >-->
+            <!--<div class='row promoList'   >-->
+
+              <!--<div class='col-8 imageDiv' #promosRow id="{{promo.id}}">-->
+                <!--<img src='{{promo | storePictureOrDefault}}' class='imageList'>-->
+              <!--</div>-->
+              <!--<div class='col-lg-4 col-md-6 col-xs-12 promoListSingle'>-->
+                <!--<nb-user *ngIf='promo.negozioNomeImmagine' name="{{promo.negozioNome}}" class='negozioListAvatar'  size='large' nbContextMenuTag="promo-negozio" picture='{{promo.negozioNomeImmagine[0].nomeFile | storePictureOrDefault}}'></nb-user>-->
+                <!--<span class='messaggio'>-->
+                  <!--{{promo.messaggio}}-->
+                <!--</span>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</nb-card-body>-->
+
+
+          <nb-card-body [hidden]="view != 2 || hidePromos" class='promos-list-item' *ngFor="let promo of promos">
+            <nb-card class="promo-list-item">
+              <!--<nb-card-body>-->
+              <div class='row no-gutters' [class.promoList]="isMobileScreen" #negozioRow id="{{promo.id}}">
+                <!--<div class='row' style="width: 100%">-->
+                <!--&lt;!&ndash; <img src='/assets/images/pallini.png' class='abuse' (click)="abuse(promo.id)" *ngIf='!isMobileScreen'> &ndash;&gt;-->
+                <!--</div>-->
+
+                <div class='col-lg-7 imageDiv' [hidden]="isMobileScreen">
+                  <div class='list-img-wrapper' [class.list-img-wrapper-tablet]="isTabletScreen">
+                    <div class="promo-img">
+                      <!--<img (click)='goTo(promo.id)' [lazyLoad]="promo | storePictureOrDefault" [offset]="40" class="img img-responsive full-width">-->
+                      <!--<div class="img" (click)='goTo(promo.id)' [style.background-image]="'url(\'' + (promo | storePictureOrDefault) + '\')'"></div>-->
+                      <div class="img" (click)='goTo(promo.id)' (dblclick)="doubleClick(followButtonPromo)" [lazyLoad]="promo | storePictureOrDefault" [offset]="40"></div>
+                    </div>
+                  </div>
+                  <!-- <img [lazyLoad]="promo | storePictureOrDefault" class='imageList' [offset]="100"> -->
+                </div>
+                <div class='col-lg-5 col-12 promoListSingle' [class.promo-list-single-tablet]="isTabletScreen" [hidden]='isMobileScreen'>
+                  <img src='/assets/images/pallini.png' (click)="abuse(promo.id)" containerClass="blog-soon-tooltip" tooltip="Segnala Abuso" placement="bottom" class='abuse'/>
+                  <!--&lt;!&ndash;<a [routerLink]="['/negozio', friendlyUrl(promo.negozioNome)+'-'+promo.idNegozio]">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<nb-user *ngIf='promo.negozioNomeImmagine' name="{{promo.negozioNome}}" class='negozioListAvatar'  size='large' nbContextMenuTag="promo" picture='{{ promo.negozioNomeImmagine | storePictureOrDefault }}'></nb-user>&ndash;&gt;-->
+                  <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                  <!--<p class="negozio-opened-closed mb-0" [ngClass]="{'negozio-closed': !(promo | storeOpened) }" style='text-transform: uppercase'>{{ promo | storeOpened: true: [undefined, undefined, ''] | uppercase }}</p>-->
+
+                  <!--<span class='distance'>-->
+                    <!--<i><b>{{ promo.negozioDistance | storeDistance }}</b></i>-->
+                  <!--</span>-->
+
+                  <!--<h3 *ngIf='!promo.negozioNomeImmagine'>-->
+                    <!--<a class="negozio-title" [routerLink]="['/negozio', friendlyUrl(promo.negozioNome)+'-'+promo.idNegozio]">{{ promo.negozioNome }}</a>-->
+                  <!--</h3>-->
+
+                  <span class='messaggio' [class.messaggio-desktop]="isDesktopScreen" [class.messaggio-tablet]="isTabletScreen">
+                    {{promo.messaggio}}
+                  </span>
+
+                  <!--<span class='date'>-->
+                  <!--Pubblicato il {{promo.dateCreated | date :'dd/MM/yyyy'}}-->
+                  <!--</span>-->
+                  <!-- <img class='right' src= '/assets/images/follow.png'/> -->
+                  <!--<app-followButton [negozioID]='promo.idNegozio' [small]="true"></app-followButton>-->
+                  <app-follow-promo-button #followButtonPromo="followButtonPromo" [type]="'icon'" [small]="isTabletScreen" [promo]="promo" [promoId]="promo.id"></app-follow-promo-button>
+                </div>
+                <div [hidden]="!isMobileScreen" class='mobileListVetrina'>
+                  <!--<div class='row no-gutters'>-->
+                    <!--&lt;!&ndash;<div class='col-2 col-list profileNegozio'>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<img [lazyLoad]="promo.negozioNomeImmagine | storePictureOrDefault" [offset]="40" />&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--<div class='col-9 col-list'>-->
+                      <!--<a [routerLink]="['/negozio', friendlyUrl(promo.negozioNome)+'-'+promo.idNegozio]">-->
+                        <!--<h3 class='list-title-mobile'>{{promo.negozioNome}}</h3>-->
+                      <!--</a>-->
+                    <!--</div>-->
+                    <!--<div class='col-3 open-closed-distance-container-mobile'>-->
+                      <!--<p class="negozio-opened-closed mb-0" [ngClass]="{'negozio-closed': !(promo | storeOpened) }">{{ promo | storeOpened: true: [undefined, undefined, ''] | uppercase }}</p>-->
+                      <!--<span class='distance'><i><b>{{ promo.negozioDistance | storeDistance }}</b></i></span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <div class='row no-gutters'>
+                    <div class='col-12 imagePromoMobile'>
+                      <div class="imageContainerMobile">
+                        <div (click)="mobileDoubleClick(followButtonPromoMobile)" [lazyLoad]="promo | storePictureOrDefault" class='imageMobile' ></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class='row no-gutters'>
+                    <div class='col-12 socialLinkMobileList'>
+                  <span>
+                    <!-- <img src='/assets/images/pallini.png' (click)="abuse(promo.id)" containerClass="blog-soon-tooltip" tooltip="Segnala Abuso" placement="bottom" class='abuse abuse-mobile'/> -->
+                    <!--<app-followButton [small]="true" [negozioID]="promo.idNegozio"></app-followButton>-->
+                    <app-follow-promo-button #followButtonPromoMobile="followButtonPromo" [type]="'icon'" [small]="true" [promo]="promo" [promoId]="promo.id"></app-follow-promo-button>
+                  </span>
+                      <img src='/assets/images/pallini.png' (click)="abuse(promo.id)" containerClass="blog-soon-tooltip" tooltip="Segnala Abuso" placement="bottom" class='abuse'/>
+                    </div>
+                    <div class='col-12'>
+                  <span class='messaggio'>
+                    {{promo.messaggio}}
+                  </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--</nb-card-body>-->
+            </nb-card>
+          </nb-card-body>
+
+
+
+
+
+
+          <!--<nb-card-body [hidden]="view != 2 || hidePromos" *ngFor="let promo of promos" class="promos-list-item">-->
+            <!--<div class='row promoList' #promosRow id="{{promo.id}}">-->
+              <!--<div class='row' style="width: 100%">-->
+                <!--&lt;!&ndash; <img src='/assets/images/pallini.png' class='abuse' (click)="abuse(promo.id)" *ngIf='!isMobileScreen'> &ndash;&gt;-->
+              <!--</div>-->
+
+              <!--<div class='col-lg-6 imageDiv' [hidden]="isMobileScreen">-->
+                <!--<div class='list-img-wrapper'>-->
+                  <!--<div class="promo-img">-->
+                    <!--&lt;!&ndash;<img (click)='goTo(promo.id)' [lazyLoad]="promo | storePictureOrDefault" [offset]="40" class="img img-responsive full-width">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="img" (click)='goTo(promo.id)' [style.background-image]="'url(\'' + (promo | storePictureOrDefault) + '\')'"></div>&ndash;&gt;-->
+                    <!--<div class="img" [lazyLoad]="promo | storePictureOrDefault" [offset]="40" (dblclick)="doubleClick(followButtonPromo)"></div>-->
+                  <!--</div>-->
+                <!--</div>              </div>-->
+
+              <!--<div class='col-lg-6 col-md-6 col-xs-12 promoListSingle'[hidden]='isMobileScreen'>-->
+                <!--<a [routerLink]="['/negozio', friendlyUrl(promo.negozioNome)+'-'+promo.idNegozio]">-->
+                  <!--<nb-user *ngIf='promo.negozioNomeImmagine' name="{{promo.negozioNome}}" class='negozioListAvatar'  size='large' nbContextMenuTag="promo" picture='{{ promo | storePictureOrDefault }}'></nb-user>-->
+                <!--</a>-->
+                <!--<p class="negozio-opened-closed mb-0" [ngClass]="{'negozio-closed': !(promo | storeOpened) }" style='text-transform: uppercase'>{{ promo | storeOpened: true: [undefined, undefined, ''] | uppercase }}</p>-->
+
+                <!--<span class='distance'>-->
+              <!--&lt;!&ndash;<i><b>{{ promo.negozioDistance | storeDistance }}</b></i>&ndash;&gt;-->
+            <!--</span>-->
+
+                <!--<h3 *ngIf='!promo.negozioNomeImmagine'>-->
+                  <!--<a class="negozio-title" [routerLink]="['negozio', friendlyUrl(promo.negozioNome)+'-'+promo.idNegozio]">{{ promo.negozioNome }}</a>-->
+                <!--</h3>-->
+
+                <!--<span class='messaggio'>-->
+              <!--{{promo.messaggio}}-->
+            <!--</span>-->
+
+                <!--&lt;!&ndash; <img class='right' src= '/assets/images/follow.png'/> &ndash;&gt;-->
+                <!--<app-follow-promo-button #followButtonPromo="followButtonPromo" [promo]='promo' [type]="'icon'" [small]="true"></app-follow-promo-button>-->
+              <!--</div>-->
+              <!--<div [hidden]="!isMobileScreen" class='mobileListVetrina'>-->
+                <!--<div class='row'>-->
+                  <!--<div class='col-12 imagePromoMobile'>-->
+                    <!--<div class="imageContainerMobile">-->
+                      <!--<div (click)="mobileDoubleClick(followButtonPromoMobile)" class="imageMobile" [lazyLoad]="promo | storePictureOrDefault"></div>-->
+                    <!--</div>-->
+
+                    <!--&lt;!&ndash;<img [lazyLoad]="promo | storePictureOrDefault" [offset]="40" class='promoMobileListImage' (click)="mobileDoubleClick(followButtonPromoMobile)"/>&ndash;&gt;-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class='row'>-->
+                  <!--<div class='col-12 socialLinkMobileList'>-->
+                <!--<span>-->
+                  <!--&lt;!&ndash; <img src='/assets/images/pallini.png' (click)="abuse(promo.id)" containerClass="blog-soon-tooltip" tooltip="Segnala Abuso" placement="bottom" class='abuse abuse-mobile'/> &ndash;&gt;-->
+                  <!--<app-follow-promo-button #followButtonPromoMobile="followButtonPromo" [promo]='promo' [type]="'icon'" [small]="true"></app-follow-promo-button>-->
+                  <!--<img src='/assets/images/pallini.png' (click)="abuse(promo.id)" containerClass="blog-soon-tooltip" tooltip="Segnala Abuso" placement="bottom" class='abuse abuse-mobile'/>-->
+                <!--</span>-->
+                  <!--</div>-->
+                  <!--<div class='col-12'>-->
+                <!--<span class='messaggio'>-->
+                  <!--{{promo.messaggio}}-->
+                <!--</span>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</nb-card-body>-->
+
+        </nb-card>
+      </div>
+    </div>
+    <!-- END Vetrina -->
+
+  </nb-layout-column>
+<!-- </nb-layout> -->
+
+
+
+<ng-template #templateUomo>
+  <nb-list [hidden]='isMobileScreen'>
+    <nb-list-item class='titleList'><i class='nb-arrow-thin-left backMacroCats' [hidden]="!showMicroCatsUomo" (click)="backUomo()"></i><i>Uomo</i></nb-list-item>
+  </nb-list>
+  <div class='row categorieIcons macroCats' [hidden]="showMicroCatsUomo">
+
+    <div class='col-lg-3 col-xs-4 col-md-4 col-4' *ngIf='(negozio.categorie | baboulArrayFilterLetter: "UOMO" : "sesso" | baboulCategoryTree: 5 : 1).length > 0' >
+      <img src='/assets/images/categorie/UOMO/Abbigliamento.png' (click)='showMicroCatsUomo=5' />
+      Abbigliamento
+    </div>
+    <div class='col-lg-3 col-xs-4 col-md-4 col-4' *ngIf='(negozio.categorie | baboulArrayFilterLetter: "UOMO" : "sesso" | baboulCategoryTree: 8 : 1).length > 0' >
+      <img src='/assets/images/categorie/UOMO/Scarpe.png' (click)='showMicroCatsUomo=8' />
+      Scarpe
+    </div>
+    <div class='col-lg-3 col-xs-4 col-md-4 col-4' *ngIf='(negozio.categorie | baboulArrayFilterLetter: "UOMO" : "sesso" | baboulCategoryTree: 6 : 1).length > 0' >
+      <img src='/assets/images/categorie/UOMO/Accessori.png' (click)='showMicroCatsUomo=6' />
+      Accessori
+    </div>
+    <div class='col-lg-3 col-xs-4 col-md-4 col-4' *ngIf='(negozio.categorie | baboulArrayFilterLetter: "UOMO" : "sesso" | baboulCategoryTree: 501 : 1).length > 0' >
+      <img src='/assets/images/categorie/UOMO/Borse.png' (click)='showMicroCatsUomo=501' />
+      Borse
+    </div>
+  </div>
+  <pagination-controls
+    class='paginationMicroCats'
+    [hidden]='!showMicroCatsUomo'
+    (pageChange)="pUomo = $event"
+    maxSize="0"
+    id="uomo"
+    previousLabel="Precedenti"
+    nextLabel="Successive"
+    >
+  </pagination-controls>
+  <div  class='row categorieIcons subCats' [hidden]='!showMicroCatsUomo'>
+
+    <div class='col-4' [ngClass]='{"catSelected":pathUomo==item}' *ngFor='let item of categoriesNegozio[showMicroCatsUomo] | paginate: { itemsPerPage: 6, currentPage: pUomo, id: "uomo" } '>
+      <img src='/assets/images/categorie/UOMO/{{microCats[item]}}.png' (click)='this.pathUomo = item' />
+      {{microCats[item]}}
+    </div>
+  </div>
+    <nb-list class='list' *ngIf='pathUomo'>
+      <nb-list-item  *ngFor="let categoria of negozio.categorie | baboulArrayFilterLetter: 'UOMO' : 'sesso' | baboulCategoryTree: pathUomo" (click)='categoriaSearch(categoria.nome, "UOMO", categoria.id)'>
+        {{ categoria.nome }}
+      </nb-list-item>
+      <nb-list-item *ngIf="(negozio.categorie | baboulArrayFilterLetter: 'UOMO' : 'sesso' | baboulCategoryTree: pathUomo).length === 0">
+        No results
+      </nb-list-item>
+    </nb-list>
+  </ng-template>
+
+
+
+<ng-template #templateDonna>
+  <nb-list [hidden]='isMobileScreen'>
+    <nb-list-item class='titleList'><i class='nb-arrow-thin-left backMacroCats' [hidden]="!showMicroCats" (click)="backDonna()"></i><i>Donna</i></nb-list-item>
+  </nb-list>
+  <div class='row categorieIcons macroCats' [hidden]="showMicroCats">
+
+    <div class='col-lg-3 col-xs-4 col-md-4 col-4' *ngIf='(negozio.categorie | baboulArrayFilterLetter: "DONNA" : "sesso" | baboulCategoryTree: 3 : 1).length > 0' >
+      <img src='/assets/images/categorie/DONNA/Abbigliamento.png' (click)='showMicroCats=3' />
+      Abbigliamento
+    </div>
+    <div class='col-lg-3 col-xs-4 col-md-4 col-4' *ngIf='(negozio.categorie | baboulArrayFilterLetter: "DONNA" : "sesso" | baboulCategoryTree: 4 : 1).length > 0' >
+      <img src='/assets/images/categorie/DONNA/Scarpe.png' (click)='showMicroCats=4' />
+      Scarpe
+    </div>
+    <div class='col-lg-3 col-xs-4 col-md-4 col-4' *ngIf='(negozio.categorie | baboulArrayFilterLetter: "DONNA" : "sesso" | baboulCategoryTree: 7 : 1).length > 0' >
+      <img src='/assets/images/categorie/DONNA/Accessori.png' (click)='showMicroCats=7' />
+      Accessori
+    </div>
+    <div class='col-lg-3 col-xs-4 col-md-4 col-4' *ngIf='(negozio.categorie | baboulArrayFilterLetter: "DONNA" : "sesso" | baboulCategoryTree: 515 : 1).length > 0' >
+      <img src='/assets/images/categorie/DONNA/BorseMain.png' (click)='showMicroCats=515' />
+      Borse
+    </div>
+  </div>
+  <pagination-controls
+    class='paginationMicroCats'
+    [hidden]='!showMicroCats'
+    (pageChange)="p = $event"
+    maxSize="0"
+    id="donna"
+    previousLabel="Precedenti"
+    nextLabel="Successive"
+    >
+  </pagination-controls>
+  <div  class='row categorieIcons subCats' [hidden]='!showMicroCats'>
+
+    <div class='col-4' [ngClass]='{"catSelected":path==item}' *ngFor='let item of categoriesNegozio[showMicroCats] | paginate: { itemsPerPage: 6, currentPage: p, id: "donna" } '>
+      <img src='/assets/images/categorie/DONNA/{{microCats[item]}}.png' (click)='this.path=item' />
+      {{microCats[item]}}
+    </div>
+  </div>
+
+
+  <!-- <div class='row categorieIcons subCats' [hidden]='!showMicroCa'>
+    <div class='col-4' [ngClass]='{"catSelected":path==58}'>
+      <img src='/assets/images/maglie_donna.png' (click)='path=58' />
+      Maglie e Felpe
+    </div>
+    <div class='col-4' [ngClass]='{"catSelected":path==13}'>
+      <img src='/assets/images/tute.png' (click)='path=13'/>
+      Tute
+    </div>
+    <div class='col-4' [ngClass]='{"catSelected":path==48}'>
+      <img src='/assets/images/pantaloni_donna.png' (click)='path=48' />
+      Pantaloni
+    </div>
+    <div class='col-4' [ngClass]='{"catSelected":path==43}'>
+      <img src='/assets/images/camice_donna.png' (click)='path=43'/>
+      Camicie
+    </div>
+    <div class='col-4' [ngClass]='{"catSelected":path==55}'>
+      <img src='/assets/images/jeans_donna.png' (click)='path=55'  />
+      Jeans
+    </div>
+    <div class='col-4' [ngClass]='{"catSelected":path==470}'>
+      <img src='/assets/images/pellicce.png' (click)='path=470' />
+      Pellicce
+    </div>
+  </div> -->
+
+
+
+  <nb-list class='list' *ngIf='path'>
+    <nb-list-item *ngFor="let categoria of negozio.categorie | baboulArrayFilterLetter: 'DONNA' : 'sesso' | baboulCategoryTree: path" (click)='categoriaSearch(categoria.nome, "DONNA", categoria.id)'>
+      {{ categoria.nome }}
+    </nb-list-item>
+    <nb-list-item *ngIf="(negozio.categorie | baboulArrayFilterLetter: 'DONNA' : 'sesso' | baboulCategoryTree: path).length === 0">
+      No results
+    </nb-list-item>
+  </nb-list>
+</ng-template>

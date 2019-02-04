@@ -1,0 +1,115 @@
+
+
+
+
+      <div class="content-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="auto">
+        <swiper *ngIf="type == 'component' && show" class="swiper-container" fxFlex="auto" [config]="config" [disabled]="disabled" (indexChange)="onIndexChange($event)" (swiperTransitionStart)="onSwiperEvent('transitionStart')" (swiperTransitionEnd)="onSwiperEvent('transitionEnd')">
+          <div class="swiper-slide">
+            <div fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+              <div class='searchbox'>
+                <p class='searchHead'>Che cosa</p>
+                <p class="searchHead"><b>stai cercando?</b> </p>
+                <p class="searchSub"><i>
+                  #abbigliamento #scarpe #accessori
+                </i>
+              </p>
+              </div>
+              <app-search></app-search>
+
+
+            </div>
+          </div>
+          <div class="swiper-slide  vetrinaSlide slideHome">
+            <div class='scopri'>
+              <div id="cpage"></div>
+              <p class='searchHead'>Non sai</p>
+              <p class="searchHead"><b>cosa cercare?</b> </p>
+              <p class="searchSub"><i>
+                <button  nbButton outline status="success" (click)="scrollView(vetrina)">Scopri di piú</button>
+              </i>
+            </p>
+              </div>
+          </div>
+
+        </swiper>
+
+
+
+          <div class="swiper-scrollbar" [hidden]="config.scrollbar === false"></div>
+          <div class="swiper-pagination" [hidden]="config.pagination === false"></div>
+
+          <div class="swiper-button-prev" [hidden]="config.navigation === false"></div>
+          <div class="swiper-button-next" [hidden]="config.navigation === false"></div>
+        </div>
+
+
+
+
+<nb-card *ngIf="showVetrina" class='cardVetrina' >
+  <div class='row vetrina'#vetrina>
+    <span class='vetrinaDescription'>
+      Sulla Vetrina Baboul puoi trovare <b>Nuovi Arrivi, Promozioni,
+Prodotti di Punta, Eventi </b> di Negozi particolari e selezionati. <br />
+<b>Vai a dare un’occhiata!</b>
+    </span>
+  </div>
+  <div class="row vetrina" >
+    <div class='col-2 negozioVetrina' *ngFor='let vetrina of vetrinaNegozi| limitTo: 5 : 0'>
+        <img [routerLink]="['/vetrina/', vetrina.id ]" src='/shopadvisor/immagini/negozi/{{vetrina.nomeImmagine}}' style='width: 100%'>
+    </div>
+
+  </div>
+
+  <div class="row vetrina">
+    <span class='goToSpan' [routerLink]='["/vetrina"]'>
+      Vai alla vetrina >>
+    </span>
+  </div>
+  <div class='row vetrina mostViewed'>
+    <span class='descriptionMostViewed'><b>Negozi piú visti</b></span>
+  </div>
+
+  <div class="row vetrina mostViewed">
+
+    <div class='col-2 negozioVetrina' *ngFor='let negozio of negoziMost' [routerLink]="['/negozio', negozio.id]">
+      <img src="/shopadvisor/immagini/negozi/{{negozio.immagini[0].nomeFile}}" style='width: 100%' />
+        <span ><b>{{negozio.nome}}</b></span> <br />
+        <span>{{negozio.indirizzo}}</span>
+    </div>
+
+  </div>
+
+  <div class="row vetrina mostViewed">
+    <span class='goToSpan'>
+      <a [routerLink]="['/list/negozi']">Vai a tutti i negozi >></a>
+    </span>
+  </div>
+
+
+  <div class="row vetrina footer">
+    <div class='col-6'>
+      <h3>
+        Riscopri il Piacere
+dell’Acquisto Offline!
+      </h3>
+      <p>
+        Toccare i vestiti, vederseli addosso, farsi consigliare, e
+soprattutto niente più resi da gestire.
+Torna in Negozio!
+<b>#BACK</b>IN<b>STORE</b>
+      </p>
+
+    </div>
+
+    <div class='col-4'>
+      <img src="assets/images/immagine_footer.png" />
+    </div>
+
+    <div class='col-2'>
+      <img class='chat' src="assets/images/chat.png" />
+    </div>
+
+  </div>
+
+</nb-card>
+<app-footer></app-footer>

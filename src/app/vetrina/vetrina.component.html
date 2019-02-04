@@ -1,0 +1,140 @@
+<nb-layout-header class='vetrina-header' [fixed]="true">
+  <div class="d-flex flex-column nav-content">
+    <div class="d-flex">
+      <div class='navWrapper'>
+        <span class='headWrapper'>
+          <span class='iconVetrina' [class.iconVetrina-mobile]="isMobileScreen">
+            <ng-container [ngSwitch]="showAs" *ngIf='!isMobileScreen'>
+              <i class="nb-keypad" *ngSwitchCase="'list'" (click)='switchView()'></i>
+              <i class="nb-list" *ngSwitchDefault="" (click)='switchView()'></i>
+            </ng-container>
+          </span>
+          <span class='iconVetrina' [class.iconVetrina-mobile]="isMobileScreen" (click)='toggle()' *ngIf='isMobileScreen'>
+            <i class="nb-menu" ></i>
+        </span>
+            <h3 [class.title-mobile]="isMobileScreen">Vetrina</h3>
+            <span class='iconVetrina' [class.iconVetrina-mobile]="isMobileScreen">
+              <ng-container [ngSwitch]="showAs" *ngIf='isMobileScreen'>
+                <i class="nb-keypad" *ngSwitchCase="'list'" (click)='switchView()'></i>
+                <i class="nb-list" *ngSwitchDefault="" (click)='switchView()'></i>
+              </ng-container>
+            </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</nb-layout-header>
+
+<div class="content">
+  <ng-container [ngSwitch]="showAs">
+
+    <!-- Griglia / Default -->
+    <ng-container *ngSwitchDefault="">
+      <nb-card class="promos-grid" [class.promos-grid-mobile]="isMobileScreen" #grid>
+        <div class='row m-0'>
+          <div class='col-4 promo-img-wrapper' [class.promo-img-wrapper-mobile]="isMobileScreen" [class.right-padding-0]="isMobileScreen && (i + 1) % 3 === 0" *ngFor="let promo of promos; let i = index">
+            <div class="promo-img">
+              <!--<img (click)='goTo(promo.id)' [lazyLoad]="promo | storePictureOrDefault" [offset]="40" class="img img-responsive full-width">-->
+              <!--<div class="img" (click)='goTo(promo.id)' [style.background-image]="'url(\'' + (promo | storePictureOrDefault) + '\')'"></div>-->
+              <div class="img" (click)='goTo(promo.id)' [lazyLoad]="promo | storePictureOrDefault" [offset]="40"></div>
+            </div>
+          </div>
+        </div>
+      </nb-card>
+    </ng-container>
+
+    <!-- Lista -->
+    <ng-container *ngSwitchCase="'list'">
+
+        <nb-list *ngIf='listPromos && listPromos.length > 0' nbInfiniteList [threshold]="1000" listenWindowScroll=true (bottomThreshold)="loadNext()" class="store-list">
+          <nb-list-item class='promo-list-item' *ngFor="let promo of listPromos">
+            <nb-card class="promos-list-item">
+              <!--<nb-card-body>-->
+              <div class='row no-gutters' [class.promoList]="isMobileScreen" #negozioRow id="{{promo.id}}">
+                <!--<div class='row' style="width: 100%">-->
+                <!--&lt;!&ndash; <img src='/assets/images/pallini.png' class='abuse' (click)="abuse(promo.id)" *ngIf='!isMobileScreen'> &ndash;&gt;-->
+                <!--</div>-->
+
+                <div class='col-lg-7 imageDiv' [hidden]="isMobileScreen">
+                  <div class='list-img-wrapper'>
+                    <div class="promo-img">
+                      <!--<img (click)='goTo(promo.id)' [lazyLoad]="promo | storePictureOrDefault" [offset]="40" class="img img-responsive full-width">-->
+                      <!--<div class="img" (click)='goTo(promo.id)' [style.background-image]="'url(\'' + (promo | storePictureOrDefault) + '\')'"></div>-->
+                      <div class="img" (click)='goTo(promo.id)' (dblclick)="doubleClick(followButtonPromo)" [lazyLoad]="promo | storePictureOrDefault" [offset]="40"></div>
+                    </div>
+                  </div>
+                  <!-- <img [lazyLoad]="promo | storePictureOrDefault" class='imageList' [offset]="100"> -->
+                </div>
+                <div class='col-lg-5 col-12 promoListSingle'[hidden]='isMobileScreen'>
+                  <img src='/assets/images/pallini.png' (click)="abuse(promo.id)" containerClass="blog-soon-tooltip" tooltip="Segnala Abuso" placement="bottom" class='abuse'/>
+                  <a [routerLink]="['/negozio', friendlyUrl(promo.negozioNome)+'-'+promo.idNegozio]">
+                    <nb-user *ngIf='promo.negozioNomeImmagine' name="{{promo.negozioNome}}" class='negozioListAvatar'  size='large' nbContextMenuTag="promo" picture='{{ promo.negozioNomeImmagine | storePictureOrDefault }}'></nb-user>
+                  </a>
+                  <p class="negozio-opened-closed mb-0" [ngClass]="{'negozio-closed': !(promo | storeOpened) }" style='text-transform: uppercase'>{{ promo | storeOpened: true: [undefined, undefined, ''] | uppercase }}</p>
+
+                  <span class='distance'>
+                    <i><b>{{ promo.negozioDistance | storeDistance }}</b></i>
+                  </span>
+
+                  <h3 *ngIf='!promo.negozioNomeImmagine'>
+                    <a class="negozio-title" [routerLink]="['/negozio', friendlyUrl(promo.negozioNome)+'-'+promo.idNegozio]">{{ promo.negozioNome }}</a>
+                  </h3>
+
+                  <span class='messaggio' [class.messaggio-desktop]="isDesktopScreen">
+                {{promo.messaggio}}
+              </span>
+
+                  <!--<span class='date'>-->
+                <!--Pubblicato il {{promo.dateCreated | date :'dd/MM/yyyy'}}-->
+              <!--</span>-->
+                  <!-- <img class='right' src= '/assets/images/follow.png'/> -->
+                  <!--<app-followButton [negozioID]='promo.idNegozio' [small]="true"></app-followButton>-->
+                  <app-follow-promo-button #followButtonPromo="followButtonPromo" [type]="'icon'" [small]="isTabletScreen" [promo]="promo" [promoId]="promo.id"></app-follow-promo-button>
+                </div>
+                <div [hidden]="!isMobileScreen" class='mobileListVetrina'>
+                  <div class='row no-gutters'>
+                    <div class='col-2 col-list profileNegozio'>
+                      <img [lazyLoad]="promo.negozioNomeImmagine | storePictureOrDefault" [offset]="40" />
+                    </div>
+                    <div class='col-7 col-list'>
+                      <a [routerLink]="['/negozio', friendlyUrl(promo.negozioNome)+'-'+promo.idNegozio]">
+                        <h3 class='list-title-mobile'>{{promo.negozioNome}}</h3>
+                      </a>
+                    </div>
+                    <div class='col-3 open-closed-distance-container-mobile'>
+                      <p class="negozio-opened-closed mb-0" [ngClass]="{'negozio-closed': !(promo | storeOpened) }">{{ promo | storeOpened: true: [undefined, undefined, ''] | uppercase }}</p>
+                      <span class='distance'><i><b>{{ promo.negozioDistance | storeDistance }}</b></i></span>
+                    </div>
+                  </div>
+                  <div class='row no-gutters'>
+                    <div class='col-12 imagePromoMobile'>
+                      <div class="imageContainerMobile">
+                        <div (click)="mobileDoubleClick(followButtonPromoMobile)" [lazyLoad]="promo | storePictureOrDefault" class='imageMobile' ></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class='row no-gutters'>
+                    <div class='col-12 socialLinkMobileList'>
+                  <span>
+                    <!-- <img src='/assets/images/pallini.png' (click)="abuse(promo.id)" containerClass="blog-soon-tooltip" tooltip="Segnala Abuso" placement="bottom" class='abuse abuse-mobile'/> -->
+                    <!--<app-followButton [small]="true" [negozioID]="promo.idNegozio"></app-followButton>-->
+                    <app-follow-promo-button #followButtonPromoMobile="followButtonPromo" [type]="'icon'" [small]="true" [promo]="promo" [promoId]="promo.id"></app-follow-promo-button>
+                  </span>
+                      <img src='/assets/images/pallini.png' (click)="abuse(promo.id)" containerClass="blog-soon-tooltip" tooltip="Segnala Abuso" placement="bottom" class='abuse'/>
+                    </div>
+                    <div class='col-12'>
+                  <span class='messaggio'>
+                    {{promo.messaggio}}
+                  </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--</nb-card-body>-->
+            </nb-card>
+          </nb-list-item>
+        </nb-list>
+    </ng-container>
+
+  </ng-container>
+</div>

@@ -1,0 +1,5 @@
+<div class='banner' (click)="bannerAction()">
+  <img class='bannerImage' src="assets/images/sconti/banner-desktop.jpg" style='cursor: pointer' *ngIf="isDesktopScreen" />
+  <img class='bannerImage' src="assets/images/sconti/banner-tablet.jpg" style='cursor: pointer' *ngIf="isTabletScreen" />
+  <img class='bannerImage' src="assets/images/sconti/banner-mobile.jpg" style='cursor: pointer' *ngIf="isMobileScreen" />
+</div>

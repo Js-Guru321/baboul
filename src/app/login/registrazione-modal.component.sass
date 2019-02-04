@@ -1,0 +1,128 @@
+@import ./common
+
+@include nb-install-component()
+
+  .modal-footer
+    font-family: 'Avenir', serif
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5)
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5)
+    -webkit-border-radius: 0
+    -moz-border-radius: 0
+    border-radius: 0
+    a.login-link
+      font-weight: bolder
+      text-decoration: underline
+      color: black
+  
+  .modal-dialog 
+    max-width: 800px
+
+  .formWrapper
+    max-width: 500px
+	
+//.formWrapper .formRow
+//  width: 100%
+
+
+.registrazioneSpan, .registrazioneButton
+  display: block
+  margin: auto
+
+.logo
+  display: block
+  width: 220px
+  margin: 20px auto 30px
+
+.registrazioneSpan
+  font-size: 20px
+  margin-bottom: 20px
+  text-align: center
+  line-height: 26px
+  color: #898587
+
+.modal-body .radioCol
+    padding: 30px 18px 0
+
+.registrazioneRadio
+  display: inline
+  padding: 2px 1.5rem
+
+.registrazioneInput
+  border: 0px
+  border-bottom: 1px solid grey
+  margin-bottom: 10px
+  margin-top: 15px
+  height: 30px
+  width: 100%
+  margin-right: 10px
+  text-align: left
+  padding: 0 0 0 6px
+
+.dateContent
+  align-items: center
+  justify-content: center
+  width: 100%
+  margin-left: auto
+  margin-right: auto
+
+.dateContentMobile
+  align-items: center
+  justify-content: center
+  width: 85%
+  margin-left: auto
+  margin-right: auto
+
+.day
+  flex: 1.5
+.month
+  flex: 6
+  background-color: white
+  -webkit-appearance: none
+.year
+  flex: 2.5
+  margin-right: 0
+
+
+
+.formWrapper
+  // width: 80%
+  margin: auto
+  .buttons
+    justify-content: center !important
+    flex-direction: row !important
+    .button-facebook
+      width: 80%
+.radioCol
+  padding: 6px
+
+.registrazioneButton
+  //margin: 60px auto!important
+  background-color: #6EBFAB!important
+  font-weight: 400
+  font-size: 22px!important
+  width: 80%
+  margin-top: 40px
+  box-shadow: 5px 5px 10px #ccc
+  -webkit-box-shadow: 5px 5px 10px #ccc
+
+.fade.show
+  background: rgba(0,0,0,.5)!important
+
+.modal-content
+  border: none
+//  background: transparent
+.response-error-message
+  display: none
+  margin-top: 28px
+
+.is-invalid.invalid-feedback,
+.is-invalid.response-error-message
+  display: flex !important
+
+.gender-container
+  display: flex !important
+  align-items: center !important
+  justify-content: center !important
+  padding-top: 10px
+nb-radio
+  display: inline

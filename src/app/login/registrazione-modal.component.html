@@ -1,0 +1,107 @@
+<!--<nb-alert [status]="alert.type" *ngFor='let alert of alerts' [closable]="alert.closeable" (close)="onClose(alert)" class="status-response" [ngClass]="alert.class">-->
+<!--{{alert.message}}-->
+<!--</nb-alert>-->
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" (click)="close()" >&times;</button>
+    </div>
+    <div class="modal-body">
+      <img *ngIf="isDesktopScreen" class='logo' src="assets/images/logo_grey.png" />
+      <div class="actions-container formWrapper">
+        <div class="buttons">
+          <button class="button button-facebook" (click)="action('facebook')">
+            <i class="icon fa fa-facebook-f" style="color: white"></i>
+            <span class="text">Registrati tramite Facebook</span>
+          </button>
+        </div>
+      </div>
+      <span class='registrazioneSpan'>Immetti i tuoi dati!</span>
+
+      <div class="row">
+        <div class="col-xs-12 offset-sm-2 col-sm-8">
+          <div class='row'>
+            <div class='col-xs-12 col-sm-6'>
+              <input  type="text" [(ngModel)]="nome" name="nome" class="round registrazioneInput" placeholder="Nome" />
+            </div>
+            <div class='col-xs-12 col-sm-6'>
+              <input  type="text" [(ngModel)]="cognome" name="cognome" class="round registrazioneInput" placeholder="Cognome" />
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class="col-xs-12 col-sm-6">
+              <div class="d-flex dateContent"  [class.dateContent]="isDesktopScreen || isTabletScreen" [class.dateContentMobile]="isMobileScreen" >
+                <input type="number" [max]="maxDaysForMonth()" [min]="1" class="registrazioneInput day" [(ngModel)]="birthDate.day" (ngModelChange)="onDateValuesChange()"/>
+                <!--<input type="number" class="registrazioneInput" [(ngModel)]="birthDate.month"/>-->
+                <select class="registrazioneInput month" [(ngModel)]="birthDate.month" (ngModelChange)="onDateValuesChange()">
+                  <option [ngValue]="0" class="disabled" [disabled]="true">Seleziona il mese</option>
+                  <option *ngFor="let month of months(); let i=index" [ngValue]="i + 1">{{ month }}</option>
+                </select>
+                <input type="number" [max]="maxYears()" [min]="minYears()" class="registrazioneInput year" [(ngModel)]="birthDate.year" (ngModelChange)="onDateValuesChange()"/>
+              </div>
+              <div class="invalid-feedback" [class.is-invalid]="birthDateMissmatch">Data di nascita non valida</div>
+            </div>
+            <!--<div class='col-xs-12 col-sm-6'>-->
+              <!-- <input  type="date" [(ngModel)]="birthDay" name="birthDay" class="round registrazioneInput" placeholder="Nome" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"/> -->
+            <!--</div>-->
+            <div class='col-xs-12 col-sm-6 gender-container'>
+              <!--<label class="registrazioneRadio custom-control custom-radio">-->
+                <!--<input type="radio" class="custom-control-input" name="gender" [(ngModel)]="Gender" [value]="2" (click)="filterGender = 'DONNA'">-->
+                <!--<span class="custom-control-indicator"></span>-->
+                <!--<span class="custom-control-description">Donna</span>-->
+              <!--</label>-->
+
+              <!--<label class="registrazioneRadio custom-control custom-radio">-->
+                <!--<input type="radio" class="custom-control-input" [(ngModel)]="Gender" [value]="1" name="gender" (ngModelChange)="filterGender = 'UOMO'">-->
+                <!--<span class="custom-control-indicator"></span>-->
+                <!--<span class="custom-control-description">Uomo</span>-->
+              <!--</label>-->
+              <nb-radio-group [(ngModel)]="Gender" name="gender">
+                <nb-radio [value]="'2'">Donna</nb-radio>
+                <nb-radio [value]="'1'">Uomo</nb-radio>
+              </nb-radio-group>
+            </div>
+          </div>
+          <div class='row'>
+            <div class="col-sm-12">
+              <input  type="text" [(ngModel)]="email" name="email" class="round registrazioneInput" placeholder="Email" />
+            </div>
+            <div class='col-xs-12 col-sm-6'>
+              <input  type="password" [(ngModel)]="password" name="password" class="round registrazioneInput" placeholder="Password" required/>
+              <!--<div [class.is-invalid]="passwordMissmatch" class="invalid-feedback">Le due password non coincidono</div>-->
+            </div>
+            <div class='col-xs-12 col-sm-6'>
+              <input  type="password" [(ngModel)]="confirmPassword" name="confirmPassword" class="round registrazioneInput" placeholder="Conferma Password" required (ngModelChange)="confirmPasswordChanged()"/>
+              <div [class.is-invalid]="passwordMissmatch" class="invalid-feedback">La password di conferma non coincide con la password inserita</div>
+            </div>
+          </div>
+          <div [class.d-flex]="errorResponseMessage" class="response-error-message align-items-center text-danger h6">
+            <span class="">{{ errorResponseMessage }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class='row formWrapper'>
+        <button class='registrazioneButton' nbButton shape="round" size="small" status="success" (click)="toggleLoadingAnimation()"
+          [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="">Registrati</button>
+      </div>
+    </div>
+    <div class="modal-footer border-top-0">
+      <div class="m-auto text-center">
+        <span class="d-block" style="color: black">Sei già registrato?</span>
+        <a (click)="switchToLogin()" class="d-block login-link">Accedi tramite Email</a>
+        <!--<span class="d-block">oppure</span>-->
+        <!--<div class="actions-container">-->
+          <!--<div class="buttons">-->
+            <!--<button class="button button-facebook" (click)="action('facebook')">-->
+              <!--<i class="icon fa fa-facebook-f" style="color: white"></i>-->
+              <!--<span class="text">Registrati tramite Facebook</span>-->
+            <!--</button>-->
+          <!--</div>-->
+        <!--</div>-->
+        <a  class="d-block login-link"></a>
+      </div>
+    </div>
+  </div>
+</div>

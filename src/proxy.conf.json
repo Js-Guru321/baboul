@@ -1,0 +1,45 @@
+{
+  "/gdpr_mg": {
+     "target": "http://192.168.0.100:8080",
+     "changeOrigin": true,
+     "secure": false,
+     "logLevel": "debug"
+  },
+  "/servizi": {
+     "target": "http://127.0.0.1:8080",
+     "changeOrigin": true,
+     "secure": false,
+     "logLevel": "debug"
+  },
+  "/shopadvisor_old/*": {
+     "target": "http://18.221.74.240:8080",
+     "changeOrigin": true,
+     "secure": false,
+     "logLevel": "debug"
+  },
+  "/shopadvisor": {
+     "target":  "http://18.217.84.251:8080/",
+     "changeOrigin": true,
+     "secure": false,
+     "logLevel": "debug"
+  },
+  "sbe/shopadvisor": {
+     "target":  "http://192.168.0.109:8080/",
+     "changeOrigin": true,
+     "secure": false,
+     "logLevel": "debug",
+     "pathRewrite": {"^/shopadvisor" : ""}
+  },
+  "matteo/shopadvisor/immagini": {
+    "target": "http://baboul.it",
+    "changeOrigin": true,
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "matteo/shopadvisor/*": {
+    "target": "http://localhost:8090",
+    "changeOrigin": true,
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

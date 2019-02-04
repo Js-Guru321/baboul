@@ -1,0 +1,172 @@
+<div class='home'>
+
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <!-- Prima Slide -->
+      <div class="swiper-slide slide slide-1">
+        <div class='searchbox'>
+          <p class='searchHead'>Che cosa</p>
+          <p class="searchHead">
+            <b>stai cercando?</b>
+          </p>
+          <p class="searchSub">
+            <i>
+              #abbigliamento #scarpe #accessori
+            </i>
+          </p>
+        </div>
+      <app-search (click)="clickSearch()" (blur)="searchBlur($event)" (focus)="searchFocus($event)"></app-search>
+
+      </div>
+
+      <!-- <div class="swiper-slide vetrinaSlide slideHome slide slide-2">
+        <div class='scopri'>
+          <p class='searchHead'><b>Non sai</b> cosa cercare?</p>
+          <p class='searchSub'>Scopri nuovi <b>Negozi</b> attraverso numerose
+            <b>Novità ed Iniziative!</b></p>
+          <p class="searchSub">
+            <i>
+              <button nbButton outline class='scopriButton' (click)="scrollView(vetrina)">Scopri di piú!</button>
+            </i>
+          </p>
+        </div>
+      </div> -->
+
+    </div>
+
+    <div class="bullets">
+      <div class="description-wrapper d-none d-md-block">
+        <p class="description-location" tooltip="Presto in tutte le citt&agrave;!" placement="bottom" containerClass="location-tooltip">
+          <img class="marker-image" src="assets/images/marker.svg" />
+          <span class="location-text"><b>Bologna</b> e Provincia</span>
+        </p>
+        <p class="description-separator">Riscopri il piacere dell&apos;<b>Acquisto Offline!</b></p>
+        <h3><b>#BACK</b>IN<b>STORE</b></h3>
+      </div>
+      <div class='bullet-wrapper d-none'>
+        <span *ngFor="let bullet of carouselItems; let i=index" class="bullet" [class.active]="index===i"></span>
+      </div>
+    </div>
+
+    <div class="swiper-button-prev d-none d-disabled-md-block"></div>
+    <div class="swiper-button-next d-none d-disabled-md-block"></div>
+
+  </div>
+
+  <nb-card class='cardVetrina'>
+    <div class='row vetrina' *ngIf="!isMobileScreen">
+      <span class='vetrinaDescription'>
+        Sulla Vetrina Baboul puoi trovare <b>Nuovi Arrivi, Promozioni,
+          Prodotti di Punta, Eventi </b> di Negozi particolari e selezionati. <br/>
+          <b>Vai a dare un’occhiata!</b>
+      </span>
+    </div>
+    <div class='row vetrina negozioVetrinaMobile' *ngIf="isMobileScreen">
+      <span class='vetrinaDescriptionMobile'>
+        Sulla Vetrina Baboul puoi trovare <br>
+        <b>Nuovi Arrivi, Promozioni,</b><br>
+        <b>Prodotti di Punta, Eventi </b><br>
+        di Negozi particolari e selezionati. <br/>
+          <b>Vai a dare un’occhiata!</b>
+      </span>
+    </div>
+    <div class="row vetrina">
+      <div class='col-lg-2 col-md-6 col-xs-3 col-4 negozioVetrina' *ngFor='let vetrina of vetrinaNegozi| limitTo: 6 : 0'>
+        <img (click)='setVetrina(vetrina.id)'
+             [lazyLoad]="'/shopadvisor/immagini/negozi/'+vetrina.nomeImmagine"
+            [offset]="0" style='width: 100%'>
+      </div>
+    </div>
+
+    <div class="row vetrina">
+      <span class='goToSpan' *ngIf="!isMobileScreen">
+        <a  [routerLink]='["/vetrina"]'>Vai alla VETRINA</a>
+      </span>
+      <span class='goToSpanMobile' *ngIf="isMobileScreen">
+        <a  [routerLink]='["/vetrina"]'>Vai a VETRINA</a>
+      </span>
+    </div>
+
+    <div class='row vetrina mostViewed' #vetrinaDiv>
+      <span class='descriptionMostViewed'><b>Negozi piú visti</b></span>
+    </div>
+
+    <div class="row vetrina mostViewed">
+      <div class='col-lg-3 col-md-6 col-xs-3 negozioVetrina negozioMost'
+           *ngFor='let negozio of negoziMost| limitTo: 4 : 0' [routerLink]="['/negozio', friendlyUrl(negozio.nome)+'-'+negozio.id]">
+        <img [lazyLoad]="'/shopadvisor/immagini/negozi/'+negozio.immagini[0].nomeFile" [offset]="0"
+             class='cover'/>
+        <div class="content">
+          <span class='nome'><b>{{negozio.nome}}</b></span>
+          <app-followButton style='float: right' [small]='true' [negozioID]='negozio.id'></app-followButton>
+          <br/>
+          <span class='indirizzo'><i>{{negozio.indirizzo}}</i></span><br/>
+          <span class='genere'>{{negozio.uomo && negozio.donna ? 'Uomo - Donna' : negozio.uomo ? 'Uomo' : negozio.donna ? 'Donna' : ''}}</span><br/>
+          <span *ngIf='negozio.negozioType' class="negozioType">{{negozio.negozioType.nome}}</span>
+          <span *ngIf='!negozio.negozioType' class="negozioType">-</span>
+          <br/>
+          <span class="tipo">{{negozio.tipo}}</span>
+        </div>
+      </div>
+    </div>
+
+<!-- <div class='mostViewedMobile'>
+  <h3>Negozi piú visti</h3>
+
+
+    <div id="scroller-wrapper">
+    <div id="scroller" >
+      <
+        <div class="elem col-4" *ngFor='let negozio of negoziMost| limitTo: 4 : 0' [routerLink]="['/negozio', negozio.id]">
+          <img [lazyLoad]="'/shopadvisor/immagini/negozi/'+negozio.immagini[0].nomeFile" [offset]="0" style='width: 100px; height: 100px;'/>
+          <span style=''>{{negozio.nome}}</span>
+        </div>
+     </div>
+</div>
+</div> -->
+    <!--<div class="row vetrine mostViewed">-->
+
+      <!--<div class='col-lg-3 col-md-6 col-xs-12 vetrina negozioVetrina negozioMost' *ngFor='let negozio of negoziMost| limitTo: 4 : 0' [routerLink]="['/negozio', negozio.id]">-->
+        <!--<img src="/shopadvisor/immagini/negozi/{{negozio.immagini[0].nomeFile}}" class="vetrina-cover" />-->
+        <!--<div class="vetrina-body">-->
+          <!--<p class="vetrina-title">{{negozio.nome}}</p>-->
+          <!--<app-followButton class="float-right" [small]='true' [negozioID]='negozio.id'></app-followButton>-->
+          <!--<p>{{negozio.indirizzo}}</p>-->
+          <!--<p *ngIf='negozio.negozioType'>{{negozio.negozioType.nome}}</p>-->
+          <!--<p>{{negozio.tipo}}</p>-->
+        <!--</div>-->
+      <!--</div>-->
+
+    <!--</div>-->
+
+    <div class="row vetrina mostViewed">
+        <span class='goToSpan' *ngIf="!isMobileScreen" style='margin-top: 15px'>
+          <a [routerLink]="['/list/negozi']">Vai a TUTTI i NEGOZI</a>
+        </span>
+        <span class='goToSpanMobile' *ngIf="isMobileScreen" style='margin-top: 15px'>
+          <a [routerLink]="['/list/negozi']">Vai a TUTTI i NEGOZI</a>
+        </span>
+    </div>
+
+
+    <div class="row vetrina footer">
+      <div class='col-xs-12 col-md-8 order-last order-md-first'>
+        <h3 class="title">Riscopri il Piacere dell’Acquisto Offline!</h3>
+        <p class="mb-0">Toccare i vestiti, vederseli addosso, farsi consigliare, e soprattutto niente più resi da gestire.</p>
+        <p class="mb-0">Torna in Negozio!</p>
+        <p class="mt-2"><b>#BACK</b>IN<b>STORE</b></p>
+        <p class="mt-md-4 mt-1">
+          <a href="https://itunes.apple.com/it/app/baboul/id1166949662?mt=8" target="_blank" class="btn btn-outline-primary btn-download-app" *ngIf="!isMobileScreen">Scarica l'App per iOS!</a>
+          <a href="https://itunes.apple.com/it/app/baboul/id1166949662?mt=8" target="_blank" class="btn btn-outline-primary btn-download-app" *ngIf="isMobileScreen">Scarica l'App</a>
+        </p>
+      </div>
+
+      <div class='col-xs-12 col-md-4 footer-home-image order-md-last order-first'>
+        <img src="assets/images/immagine_footer.png"/>
+      </div>
+
+    </div>
+
+  </nb-card>
+
+</div>
